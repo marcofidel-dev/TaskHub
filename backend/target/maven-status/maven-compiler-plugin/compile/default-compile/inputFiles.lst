@@ -1,0 +1,12 @@
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\entity\User.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\dto\RegisterRequest.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\App.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\dto\AuthResponse.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\security\JwtProvider.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\repository\UserRepository.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\security\SecurityConfig.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\dto\ErrorResponse.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\dto\UserResponse.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\service\UserService.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\dto\LoginRequest.java
+\\wsl.localhost\Ubuntu\home\TaskHub\backend\src\main\java\com\taskhub\controller\AuthController.java
