@@ -61,7 +61,7 @@ public class JwtProvider {
         return claims.get("email", String.class);
     }
 
-    String createToken(Long userId, String email, long expiration) {
+    private String createToken(Long userId, String email, long expiration) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 

@@ -87,11 +87,11 @@ public class AuthController {
             return ResponseEntity.ok(authResponse);
 
         } catch (IllegalArgumentException e) {
-            log.warn("Login conflict: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(
+            log.warn("Login failed: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                     ErrorResponse.builder()
-                            .error("CONFLICT")
-                            .message(e.getMessage())
+                            .error("UNAUTHORIZED")
+                            .message("Invalid credentials")
                             .timestamp(LocalDateTime.now())
                             .build()
             );
@@ -108,8 +108,18 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refresh(@RequestParam String refreshToken) {
+    public ResponseEntity<?> refresh(@RequestBody Map<String, String> body) {
         try {
+            String refreshToken = body.get("refreshToken");
+            if (refreshToken == null || refreshToken.isBlank()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                        ErrorResponse.builder()
+                                .error("BAD_REQUEST")
+                                .message("refreshToken is required")
+                                .timestamp(LocalDateTime.now())
+                                .build()
+                );
+            }
             if (!jwtProvider.validateToken(refreshToken)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                         ErrorResponse.builder()
