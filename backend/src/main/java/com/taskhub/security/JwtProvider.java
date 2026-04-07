@@ -51,6 +51,10 @@ public class JwtProvider {
         return false;
     }
 
+    public Claims extractClaims(String token) {
+        return parseClaims(token);
+    }
+
     public Long getUserIdFromToken(String token) {
         Claims claims = parseClaims(token);
         return Long.valueOf(claims.getSubject());

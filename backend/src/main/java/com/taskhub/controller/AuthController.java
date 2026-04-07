@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.jsonwebtoken.Claims;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -18,7 +19,6 @@ import java.util.Map;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final UserService userService;
@@ -36,7 +36,7 @@ public class AuthController {
                     .user(userResponse)
                     .build();
 
-            log.info("User registered successfully: {}", user.getEmail());
+            log.debug("User registered successfully with ID: {}", user.getId());
             return ResponseEntity.status(HttpStatus.CREATED).body(authResponse);
 
         } catch (IllegalArgumentException e) {
@@ -83,7 +83,7 @@ public class AuthController {
                     .user(userResponse)
                     .build();
 
-            log.info("User logged in: {}", user.getEmail());
+            log.debug("User logged in with ID: {}", user.getId());
             return ResponseEntity.ok(authResponse);
 
         } catch (IllegalArgumentException e) {
@@ -130,12 +130,36 @@ public class AuthController {
                 );
             }
 
-            Long userId = jwtProvider.getUserIdFromToken(refreshToken);
-            String email = jwtProvider.getEmailFromToken(refreshToken);
+            Claims claims = jwtProvider.extractClaims(refreshToken);
+            Long userId = Long.valueOf(claims.getSubject());
+            String email = claims.get("email", String.class);
+            
+            if (email == null || email.isBlank()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                        ErrorResponse.builder()
+                                .error("UNAUTHORIZED")
+                                .message("Invalid token data")
+                                .timestamp(LocalDateTime.now())
+                                .build()
+                );
+            }
+            
+            // Verificar que el usuario aún existe
+            try {
+                userService.findByEmail(email);
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                        ErrorResponse.builder()
+                                .error("UNAUTHORIZED")
+                                .message("User no longer exists")
+                                .timestamp(LocalDateTime.now())
+                                .build()
+                );
+            }
+            
             String newAccessToken = jwtProvider.generateAccessToken(userId, email);
-
-            log.info("Token refreshed for userId: {}", userId);
-            return ResponseEntity.ok(Map.of("access_token", newAccessToken));
+            log.debug("Token refreshed for userId: {}", userId);
+            return ResponseEntity.ok(Map.of("accessToken", newAccessToken));
 
         } catch (Exception e) {
             log.error("Token refresh error: {}", e.getMessage(), e);
