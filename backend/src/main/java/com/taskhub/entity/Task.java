@@ -18,6 +18,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+
     @Column(nullable = false, length = 255)
     private String title;
 
@@ -27,8 +29,9 @@ public class Task {
     @Column(nullable = false)
     private Long userId;
 
-    @Column
+    @Column(nullable = true)
     private Long categoryId;
+
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
