@@ -1,7 +1,9 @@
 package com.taskhub.controller;
 
 import com.taskhub.dto.TaskCreateRequest;
+import com.taskhub.dto.TaskFilterRequest;
 import com.taskhub.dto.TaskResponse;
+import com.taskhub.dto.TaskResponseWithDetails;
 import com.taskhub.dto.TaskUpdateRequest;
 import com.taskhub.entity.Task;
 import com.taskhub.service.TaskService;
@@ -94,6 +96,28 @@ public class TaskController {
             return ResponseEntity.ok(taskService.mapToResponse(completed));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    // GET /api/v1/tasks/filter
+    @GetMapping("/filter")
+    public ResponseEntity<List<TaskResponseWithDetails>> filterTasks(
+            @RequestParam Long userId,
+            @RequestBody(required = false) TaskFilterRequest filters) {
+
+        if (filters == null) {
+            filters = new TaskFilterRequest();
+        }
+        try {
+            List<TaskResponseWithDetails> result = taskService.filterTasks(userId, filters)
+                    .stream()
+                    .map(taskService::mapToDetailedResponse)
+                    .toList();
+            return ResponseEntity.ok(result);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

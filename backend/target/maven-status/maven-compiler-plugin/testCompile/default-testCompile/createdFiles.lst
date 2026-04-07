@@ -1,1 +1,4 @@
+com/taskhub/service/CategoryServiceTest.class
 com/taskhub/AppTest.class
+com/taskhub/controller/TaskControllerTest.class
+com/taskhub/service/TaskServiceTest.class

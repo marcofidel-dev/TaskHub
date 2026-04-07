@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,4 +24,6 @@ public class TaskCreateRequest {
     private String priority = "MEDIUM";
 
     private LocalDateTime dueDate;
+
+    private List<Long> tagIds;
 }

@@ -18,9 +18,11 @@
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/TaskResponse.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/CategoryResponse.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/CategoryCreateRequest.java
+/home/TaskHub/backend/src/main/java/com/taskhub/dto/TaskResponseWithDetails.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/UserResponse.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/TagResponse.java
 /home/TaskHub/backend/src/main/java/com/taskhub/repository/TaskRepository.java
+/home/TaskHub/backend/src/main/java/com/taskhub/dto/TaskFilterRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/RegisterRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/controller/AuthController.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/AuthResponse.java

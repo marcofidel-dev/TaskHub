@@ -1,10 +1,11 @@
 package com.taskhub.service;
 
-import com.taskhub.dto.TaskCreateRequest;
-import com.taskhub.dto.TaskResponse;
-import com.taskhub.dto.TaskUpdateRequest;
+import com.taskhub.dto.*;
+import com.taskhub.entity.Tag;
 import com.taskhub.entity.Task;
 import com.taskhub.entity.Task.Priority;
+import com.taskhub.repository.CategoryRepository;
+import com.taskhub.repository.TagRepository;
 import com.taskhub.repository.TaskRepository;
 import com.taskhub.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -13,8 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +28,8 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final TagRepository tagRepository;
 
     @Transactional
     public Task createTask(Long userId, TaskCreateRequest req) {
@@ -40,6 +47,11 @@ public class TaskService {
                 .priority(priority)
                 .dueDate(req.getDueDate())
                 .build();
+
+        if (req.getTagIds() != null && !req.getTagIds().isEmpty()) {
+            List<Tag> tags = tagRepository.findByIdInAndUserId(req.getTagIds(), userId);
+            task.setTags(tags);
+        }
 
         Task saved = taskRepository.save(task);
         log.info("Task created: id={} for userId={}", saved.getId(), userId);
@@ -103,6 +115,83 @@ public class TaskService {
         return completed;
     }
 
+    public List<Task> filterTasks(Long userId, TaskFilterRequest filters) {
+        if (!userRepository.existsById(userId)) {
+            throw new EntityNotFoundException("User not found with id: " + userId);
+        }
+
+        Stream<Task> stream = taskRepository.findByUserId(userId).stream();
+
+        if (filters.getCategoryId() != null) {
+            stream = stream.filter(t -> filters.getCategoryId().equals(t.getCategoryId()));
+        }
+        if (filters.getTagId() != null) {
+            stream = stream.filter(t -> t.getTags().stream()
+                    .anyMatch(tag -> filters.getTagId().equals(tag.getId())));
+        }
+        if (filters.getPriority() != null) {
+            Priority p = parsePriority(filters.getPriority());
+            stream = stream.filter(t -> p.equals(t.getPriority()));
+        }
+        if (filters.getIsCompleted() != null) {
+            stream = stream.filter(t -> filters.getIsCompleted().equals(t.isCompleted()));
+        }
+        if (filters.getDueDateFrom() != null) {
+            stream = stream.filter(t -> t.getDueDate() != null
+                    && !t.getDueDate().isBefore(filters.getDueDateFrom()));
+        }
+        if (filters.getDueDateTo() != null) {
+            stream = stream.filter(t -> t.getDueDate() != null
+                    && !t.getDueDate().isAfter(filters.getDueDateTo()));
+        }
+
+        String sortBy = filters.getSortBy() != null ? filters.getSortBy() : "createdAt";
+        boolean descending = !"ASC".equalsIgnoreCase(filters.getSortOrder());
+        Comparator<Task> comparator = buildComparator(sortBy, descending);
+
+        return stream.sorted(comparator).collect(Collectors.toList());
+    }
+
+    public TaskResponseWithDetails mapToDetailedResponse(Task task) {
+        CategoryResponse categoryResponse = null;
+        if (task.getCategoryId() != null) {
+            categoryResponse = categoryRepository.findByIdAndUserId(task.getCategoryId(), task.getUserId())
+                    .map(cat -> CategoryResponse.builder()
+                            .id(cat.getId())
+                            .name(cat.getName())
+                            .description(cat.getDescription())
+                            .color(cat.getColor())
+                            .createdAt(cat.getCreatedAt())
+                            .updatedAt(cat.getUpdatedAt())
+                            .build())
+                    .orElse(null);
+        }
+
+        List<TagResponse> tagResponses = task.getTags().stream()
+                .map(tag -> TagResponse.builder()
+                        .id(tag.getId())
+                        .name(tag.getName())
+                        .color(tag.getColor())
+                        .createdAt(tag.getCreatedAt())
+                        .build())
+                .collect(Collectors.toList());
+
+        return TaskResponseWithDetails.builder()
+                .id(task.getId())
+                .title(task.getTitle())
+                .description(task.getDescription())
+                .userId(task.getUserId())
+                .categoryId(task.getCategoryId())
+                .priority(task.getPriority().name())
+                .dueDate(task.getDueDate())
+                .isCompleted(task.isCompleted())
+                .category(categoryResponse)
+                .tags(tagResponses)
+                .createdAt(task.getCreatedAt())
+                .updatedAt(task.getUpdatedAt())
+                .build();
+    }
+
     public TaskResponse mapToResponse(Task task) {
         return TaskResponse.builder()
                 .id(task.getId())
@@ -118,12 +207,26 @@ public class TaskService {
                 .build();
     }
 
-    private Priority parsePriority(String priority) {
+    public Priority parsePriority(String priority) {
         if (priority == null) return Priority.MEDIUM;
         try {
             return Priority.valueOf(priority.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid priority value: " + priority + ". Must be LOW, MEDIUM, or HIGH.");
         }
+    }
+
+    private Comparator<Task> buildComparator(String sortBy, boolean descending) {
+        Comparator<Task> comp = switch (sortBy.toLowerCase()) {
+            case "duedate" -> Comparator.comparing(Task::getDueDate,
+                    Comparator.nullsLast(Comparator.naturalOrder()));
+            case "priority" -> (t1, t2) -> Integer.compare(
+                    t1.getPriority().ordinal(), t2.getPriority().ordinal());
+            case "title" -> Comparator.comparing(Task::getTitle,
+                    Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
+            default -> Comparator.comparing(Task::getCreatedAt,
+                    Comparator.nullsLast(Comparator.naturalOrder()));
+        };
+        return descending ? comp.reversed() : comp;
     }
 }
