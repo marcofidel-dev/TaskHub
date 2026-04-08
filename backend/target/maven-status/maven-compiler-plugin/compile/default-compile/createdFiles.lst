@@ -1,5 +1,7 @@
 com/taskhub/repository/UserRepository.class
+com/taskhub/security/CurrentUserArgumentResolver.class
 com/taskhub/dto/UserResponse.class
+com/taskhub/dto/ApiErrorResponse$ApiErrorResponseBuilder.class
 com/taskhub/controller/TagController.class
 com/taskhub/dto/TagCreateRequest$TagCreateRequestBuilder.class
 com/taskhub/dto/TagCreateRequest.class
@@ -9,6 +11,8 @@ com/taskhub/entity/Category$CategoryBuilder.class
 com/taskhub/repository/TaskRepository.class
 com/taskhub/entity/Task.class
 com/taskhub/dto/TagResponse$TagResponseBuilder.class
+com/taskhub/dto/ApiErrorResponse.class
+com/taskhub/controller/GlobalExceptionHandler.class
 com/taskhub/controller/CategoryController.class
 com/taskhub/dto/LoginRequest$LoginRequestBuilder.class
 com/taskhub/dto/LoginRequest.class
@@ -40,6 +44,7 @@ com/taskhub/entity/Task$Priority.class
 com/taskhub/controller/TaskController.class
 com/taskhub/dto/TaskCreateRequest.class
 com/taskhub/dto/RegisterRequest.class
+com/taskhub/security/CurrentUser.class
 com/taskhub/entity/Category.class
 com/taskhub/entity/User$SubscriptionTier.class
 com/taskhub/controller/AuthController.class

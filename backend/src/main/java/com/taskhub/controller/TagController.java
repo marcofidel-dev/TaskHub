@@ -4,6 +4,7 @@ import com.taskhub.dto.TagCreateRequest;
 import com.taskhub.dto.TagResponse;
 import com.taskhub.dto.ErrorResponse;
 import com.taskhub.entity.Tag;
+import com.taskhub.security.CurrentUser;
 import com.taskhub.service.TagService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class TagController {
 
     @PostMapping
     public ResponseEntity<?> createTag(
-            @RequestParam Long userId,
+            @CurrentUser Long userId,
             @Valid @RequestBody TagCreateRequest req
     ) {
         try {
@@ -36,7 +37,7 @@ public class TagController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUserTags(@RequestParam Long userId) {
+    public ResponseEntity<?> getUserTags(@CurrentUser Long userId) {
         List<TagResponse> tags = tagService.getUserTags(userId)
                 .stream()
                 .map(tagService::mapToResponse)
@@ -47,7 +48,7 @@ public class TagController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTag(
             @PathVariable Long id,
-            @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         try {
             tagService.deleteTag(id, userId);

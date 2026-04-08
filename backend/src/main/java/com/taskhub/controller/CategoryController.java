@@ -3,6 +3,7 @@ package com.taskhub.controller;
 import com.taskhub.dto.CategoryCreateRequest;
 import com.taskhub.dto.CategoryResponse;
 import com.taskhub.dto.ErrorResponse;
+import com.taskhub.security.CurrentUser;
 import com.taskhub.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<?> createCategory(
-            @RequestParam Long userId,
+            @CurrentUser Long userId,
             @Valid @RequestBody CategoryCreateRequest req
     ) {
         try {
@@ -36,7 +37,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUserCategories(@RequestParam Long userId) {
+    public ResponseEntity<?> getUserCategories(@CurrentUser Long userId) {
         List<CategoryResponse> categories = categoryService.getUserCategories(userId)
                 .stream()
                 .map(categoryService::mapToResponse)
@@ -47,7 +48,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(
             @PathVariable Long id,
-            @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         return categoryService.getCategoryById(id, userId)
                 .map(category -> ResponseEntity.ok(categoryService.mapToResponse(category)))
@@ -57,7 +58,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCategory(
             @PathVariable Long id,
-            @RequestParam Long userId,
+            @CurrentUser Long userId,
             @Valid @RequestBody CategoryCreateRequest req
     ) {
         try {
@@ -71,7 +72,7 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCategory(
             @PathVariable Long id,
-            @RequestParam Long userId
+            @CurrentUser Long userId
     ) {
         try {
             categoryService.deleteCategory(id, userId);

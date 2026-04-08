@@ -10,6 +10,7 @@ import com.taskhub.repository.CategoryRepository;
 import com.taskhub.repository.TagRepository;
 import com.taskhub.repository.TaskRepository;
 import com.taskhub.repository.UserRepository;
+import com.taskhub.security.JwtProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -46,7 +45,11 @@ class TaskControllerTest {
     @Autowired
     private TagRepository tagRepository;
 
+    @Autowired
+    private JwtProvider jwtProvider;
+
     private User testUser;
+    private String authHeader;
 
     @BeforeEach
     void setUp() {
@@ -61,6 +64,9 @@ class TaskControllerTest {
                 .password("$2a$10$hashedpassword")
                 .subscriptionTier(User.SubscriptionTier.FREE)
                 .build());
+
+        String token = jwtProvider.generateAccessToken(testUser);
+        authHeader = "Bearer " + token;
     }
 
     // ── POST /api/v1/tasks/create ─────────────────────────────────────────────
@@ -73,7 +79,7 @@ class TaskControllerTest {
         req.setPriority("HIGH");
 
         mockMvc.perform(post("/api/v1/tasks/create")
-                        .param("userId", testUser.getId().toString())
+                        .header("Authorization", authHeader)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isCreated())
@@ -89,7 +95,7 @@ class TaskControllerTest {
         req.setTitle(""); // blank title — fails @NotBlank
 
         mockMvc.perform(post("/api/v1/tasks/create")
-                        .param("userId", testUser.getId().toString())
+                        .header("Authorization", authHeader)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isBadRequest());
@@ -107,7 +113,7 @@ class TaskControllerTest {
                 .priority(Task.Priority.HIGH).build());
 
         mockMvc.perform(get("/api/v1/tasks")
-                        .param("userId", testUser.getId().toString()))
+                        .header("Authorization", authHeader))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[*].title", containsInAnyOrder("Task A", "Task B")));
@@ -139,7 +145,7 @@ class TaskControllerTest {
                 .build();
 
         mockMvc.perform(get("/api/v1/tasks/filter")
-                        .param("userId", testUser.getId().toString())
+                        .header("Authorization", authHeader)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filter)))
                 .andExpect(status().isOk())
@@ -167,7 +173,7 @@ class TaskControllerTest {
                 .build();
 
         mockMvc.perform(get("/api/v1/tasks/filter")
-                        .param("userId", testUser.getId().toString())
+                        .header("Authorization", authHeader)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(filter)))
                 .andExpect(status().isOk())

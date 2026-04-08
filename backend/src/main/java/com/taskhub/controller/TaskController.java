@@ -6,6 +6,7 @@ import com.taskhub.dto.TaskResponse;
 import com.taskhub.dto.TaskResponseWithDetails;
 import com.taskhub.dto.TaskUpdateRequest;
 import com.taskhub.entity.Task;
+import com.taskhub.security.CurrentUser;
 import com.taskhub.service.TaskService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class TaskController {
     // POST /api/v1/tasks/create
     @PostMapping("/create")
     public ResponseEntity<TaskResponse> createTask(
-            @RequestParam Long userId,
+            @CurrentUser Long userId,
             @Valid @RequestBody TaskCreateRequest request) {
 
         Task task = taskService.createTask(userId, request);
@@ -37,7 +38,7 @@ public class TaskController {
 
     // GET /api/v1/tasks
     @GetMapping
-    public ResponseEntity<List<TaskResponse>> getUserTasks(@RequestParam Long userId) {
+    public ResponseEntity<List<TaskResponse>> getUserTasks(@CurrentUser Long userId) {
         List<TaskResponse> tasks = taskService.getUserTasks(userId)
                 .stream()
                 .map(taskService::mapToResponse)
@@ -49,7 +50,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> getTaskById(
             @PathVariable Long id,
-            @RequestParam Long userId) {
+            @CurrentUser Long userId) {
 
         return taskService.getTaskById(id, userId)
                 .map(task -> ResponseEntity.ok(taskService.mapToResponse(task)))
@@ -60,7 +61,7 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<TaskResponse> updateTask(
             @PathVariable Long id,
-            @RequestParam Long userId,
+            @CurrentUser Long userId,
             @Valid @RequestBody TaskUpdateRequest request) {
 
         try {
@@ -75,7 +76,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(
             @PathVariable Long id,
-            @RequestParam Long userId) {
+            @CurrentUser Long userId) {
 
         try {
             taskService.deleteTask(id, userId);
@@ -89,7 +90,7 @@ public class TaskController {
     @PatchMapping("/{id}/complete")
     public ResponseEntity<TaskResponse> completeTask(
             @PathVariable Long id,
-            @RequestParam Long userId) {
+            @CurrentUser Long userId) {
 
         try {
             Task completed = taskService.completeTask(id, userId);
@@ -102,7 +103,7 @@ public class TaskController {
     // GET /api/v1/tasks/filter
     @GetMapping("/filter")
     public ResponseEntity<List<TaskResponseWithDetails>> filterTasks(
-            @RequestParam Long userId,
+            @CurrentUser Long userId,
             @RequestBody(required = false) TaskFilterRequest filters) {
 
         if (filters == null) {

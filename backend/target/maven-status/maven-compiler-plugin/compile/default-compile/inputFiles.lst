@@ -1,6 +1,7 @@
 /home/TaskHub/backend/src/main/java/com/taskhub/controller/CategoryController.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/TaskUpdateRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/ErrorResponse.java
+/home/TaskHub/backend/src/main/java/com/taskhub/security/CurrentUser.java
 /home/TaskHub/backend/src/main/java/com/taskhub/repository/CategoryRepository.java
 /home/TaskHub/backend/src/main/java/com/taskhub/entity/User.java
 /home/TaskHub/backend/src/main/java/com/taskhub/repository/TagRepository.java
@@ -8,8 +9,10 @@
 /home/TaskHub/backend/src/main/java/com/taskhub/security/SecurityConfig.java
 /home/TaskHub/backend/src/main/java/com/taskhub/App.java
 /home/TaskHub/backend/src/main/java/com/taskhub/service/UserService.java
+/home/TaskHub/backend/src/main/java/com/taskhub/dto/ApiErrorResponse.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/TaskCreateRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/service/TaskService.java
+/home/TaskHub/backend/src/main/java/com/taskhub/controller/GlobalExceptionHandler.java
 /home/TaskHub/backend/src/main/java/com/taskhub/security/JwtProvider.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/LoginRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/entity/Task.java
@@ -25,6 +28,7 @@
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/TaskFilterRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/RegisterRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/controller/AuthController.java
+/home/TaskHub/backend/src/main/java/com/taskhub/security/CurrentUserArgumentResolver.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/AuthResponse.java
 /home/TaskHub/backend/src/main/java/com/taskhub/service/TagService.java
 /home/TaskHub/backend/src/main/java/com/taskhub/service/CategoryService.java

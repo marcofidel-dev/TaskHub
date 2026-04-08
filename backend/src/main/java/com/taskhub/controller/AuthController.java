@@ -31,8 +31,8 @@ public class AuthController {
             UserResponse userResponse = userService.mapToResponse(user);
 
             AuthResponse authResponse = AuthResponse.builder()
-                    .accessToken(jwtProvider.generateAccessToken(user.getId(), user.getEmail()))
-                    .refreshToken(jwtProvider.generateRefreshToken(user.getId(), user.getEmail()))
+                    .accessToken(jwtProvider.generateAccessToken(user))
+                    .refreshToken(jwtProvider.generateRefreshToken(user))
                     .user(userResponse)
                     .build();
 
@@ -78,8 +78,8 @@ public class AuthController {
             UserResponse userResponse = userService.mapToResponse(user);
 
             AuthResponse authResponse = AuthResponse.builder()
-                    .accessToken(jwtProvider.generateAccessToken(user.getId(), user.getEmail()))
-                    .refreshToken(jwtProvider.generateRefreshToken(user.getId(), user.getEmail()))
+                    .accessToken(jwtProvider.generateAccessToken(user))
+                    .refreshToken(jwtProvider.generateRefreshToken(user))
                     .user(userResponse)
                     .build();
 

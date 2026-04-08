@@ -1,5 +1,6 @@
 package com.taskhub.security;
 
+import com.taskhub.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -28,6 +29,14 @@ public class JwtProvider {
 
     public String generateRefreshToken(Long userId, String email) {
         return createToken(userId, email, REFRESH_EXPIRATION_MS);
+    }
+
+    public String generateAccessToken(User user) {
+        return generateAccessToken(user.getId(), user.getEmail());
+    }
+
+    public String generateRefreshToken(User user) {
+        return generateRefreshToken(user.getId(), user.getEmail());
     }
 
     public boolean validateToken(String token) {
