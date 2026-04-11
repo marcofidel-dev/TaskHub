@@ -30,33 +30,45 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
             WebDataBinderFactory binderFactory
     ) throws Exception {
 
+        boolean required = parameter.getParameterAnnotation(CurrentUser.class).required();
+
         HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
 
         if (request == null) {
-            throw new IllegalArgumentException("HttpServletRequest is required");
+            log.error("HttpServletRequest is null");
+            if (required) throw new IllegalArgumentException("HttpServletRequest is required");
+            return null;
         }
 
         String authHeader = request.getHeader("Authorization");
+        log.info("[CurrentUser] Authorization header: {}", authHeader);
 
         if (authHeader == null || authHeader.isEmpty()) {
-            log.warn("Missing Authorization header");
-            throw new IllegalArgumentException("Authorization header is required");
+            log.warn("[CurrentUser] Missing Authorization header");
+            if (required) throw new IllegalArgumentException("Authorization header is required");
+            return null;
         }
 
         if (!authHeader.startsWith("Bearer ")) {
-            log.warn("Invalid Authorization header format");
-            throw new IllegalArgumentException("Authorization header must start with 'Bearer '");
+            log.warn("[CurrentUser] Invalid Authorization header format: {}", authHeader);
+            if (required) throw new IllegalArgumentException("Authorization header must start with 'Bearer '");
+            return null;
         }
 
-        String token = authHeader.substring(7); // Remove "Bearer "
+        String token = authHeader.substring(7);
+        log.info("[CurrentUser] Token extracted (first 20 chars): {}...", token.length() > 20 ? token.substring(0, 20) : token);
 
-        if (!jwtProvider.validateToken(token)) {
-            log.warn("Invalid or expired token");
-            throw new IllegalArgumentException("Invalid or expired token");
+        boolean valid = jwtProvider.validateToken(token);
+        log.info("[CurrentUser] Token valid: {}", valid);
+
+        if (!valid) {
+            log.warn("[CurrentUser] Invalid or expired token");
+            if (required) throw new IllegalArgumentException("Invalid or expired token");
+            return null;
         }
 
         Long userId = jwtProvider.getUserIdFromToken(token);
-        log.info("Resolved userId from token: {}", userId);
+        log.info("[CurrentUser] UserId from token: {}", userId);
 
         return userId;
     }

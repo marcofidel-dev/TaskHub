@@ -4,6 +4,7 @@ import com.taskhub.dto.*;
 import com.taskhub.entity.Tag;
 import com.taskhub.entity.Task;
 import com.taskhub.entity.Task.Priority;
+import com.taskhub.entity.User;
 import com.taskhub.repository.CategoryRepository;
 import com.taskhub.repository.TagRepository;
 import com.taskhub.repository.TaskRepository;
@@ -33,29 +34,34 @@ public class TaskService {
 
     @Transactional
     public Task createTask(Long userId, TaskCreateRequest req) {
-        if (!userRepository.existsById(userId)) {
-            throw new EntityNotFoundException("User not found with id: " + userId);
-        }
+        userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        Priority priority = parsePriority(req.getPriority());
+        // Validar category solo si viene
+        if (req.getCategoryId() != null) {
+            categoryRepository.findByIdAndUserId(req.getCategoryId(), userId)
+                    .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+        }
 
         Task task = Task.builder()
                 .title(req.getTitle())
                 .description(req.getDescription())
-                .userId(userId)
+                .priority(parsePriority(req.getPriority()))
                 .categoryId(req.getCategoryId())
-                .priority(priority)
-                .dueDate(req.getDueDate())
+                .userId(userId)
+                .isCompleted(false)
                 .build();
 
+        // Procesar tags si los hay
         if (req.getTagIds() != null && !req.getTagIds().isEmpty()) {
             List<Tag> tags = tagRepository.findByIdInAndUserId(req.getTagIds(), userId);
+            if (tags.size() != req.getTagIds().size()) {
+                throw new EntityNotFoundException("One or more tags not found");
+            }
             task.setTags(tags);
         }
 
-        Task saved = taskRepository.save(task);
-        log.info("Task created: id={} for userId={}", saved.getId(), userId);
-        return saved;
+        return taskRepository.save(task);
     }
 
     public List<Task> getUserTasks(Long userId) {
@@ -77,8 +83,10 @@ public class TaskService {
         if (req.getDescription() != null) {
             task.setDescription(req.getDescription());
         }
+        // categoryId: null value means "clear category"; omit field to keep current value
+        // We treat 0 or negative as "clear" (from frontend "no category" selection)
         if (req.getCategoryId() != null) {
-            task.setCategoryId(req.getCategoryId());
+            task.setCategoryId(req.getCategoryId() <= 0 ? null : req.getCategoryId());
         }
         if (req.getPriority() != null) {
             task.setPriority(parsePriority(req.getPriority()));
@@ -87,7 +95,16 @@ public class TaskService {
             task.setDueDate(req.getDueDate());
         }
         if (req.getIsCompleted() != null) {
-            task.setCompleted(req.getIsCompleted());
+            task.setIsCompleted(req.getIsCompleted());
+        }
+        // Replace tags when tagIds is explicitly provided (even empty list clears all tags)
+        if (req.getTagIds() != null) {
+            if (req.getTagIds().isEmpty()) {
+                task.setTags(new ArrayList<>());
+            } else {
+                List<Tag> tags = tagRepository.findByIdInAndUserId(req.getTagIds(), userId);
+                task.setTags(tags);
+            }
         }
 
         Task updated = taskRepository.save(task);
@@ -109,10 +126,16 @@ public class TaskService {
         Task task = taskRepository.findByIdAndUserId(taskId, userId)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + taskId));
 
-        task.setCompleted(true);
-        Task completed = taskRepository.save(task);
-        log.info("Task completed: id={} for userId={}", taskId, userId);
-        return completed;
+        Boolean currentState = task.getIsCompleted();
+        Boolean newState = Boolean.TRUE.equals(currentState) ? Boolean.FALSE : Boolean.TRUE;
+        log.info("Toggle task={}: {} -> {}", taskId, currentState, newState);
+
+        task.setIsCompleted(newState);
+        Task saved = taskRepository.save(task);
+        taskRepository.flush();
+
+        log.info("Saved task={} isCompleted={}", taskId, saved.getIsCompleted());
+        return saved;
     }
 
     public List<Task> filterTasks(Long userId, TaskFilterRequest filters) {
@@ -134,7 +157,7 @@ public class TaskService {
             stream = stream.filter(t -> p.equals(t.getPriority()));
         }
         if (filters.getIsCompleted() != null) {
-            stream = stream.filter(t -> filters.getIsCompleted().equals(t.isCompleted()));
+            stream = stream.filter(t -> filters.getIsCompleted().equals(t.getIsCompleted()));
         }
         if (filters.getDueDateFrom() != null) {
             stream = stream.filter(t -> t.getDueDate() != null
@@ -184,7 +207,7 @@ public class TaskService {
                 .categoryId(task.getCategoryId())
                 .priority(task.getPriority().name())
                 .dueDate(task.getDueDate())
-                .isCompleted(task.isCompleted())
+                .isCompleted(task.getIsCompleted())
                 .category(categoryResponse)
                 .tags(tagResponses)
                 .createdAt(task.getCreatedAt())
@@ -201,7 +224,7 @@ public class TaskService {
                 .categoryId(task.getCategoryId())
                 .priority(task.getPriority().name())
                 .dueDate(task.getDueDate())
-                .isCompleted(task.isCompleted())
+                .isCompleted(task.getIsCompleted())
                 .createdAt(task.getCreatedAt())
                 .updatedAt(task.getUpdatedAt())
                 .build();

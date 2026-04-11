@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.taskhub.controller.TaskControllerTest" time="5.452" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.taskhub.controller.TaskControllerTest" time="5.872" tests="5" errors="0" skipped="0" failures="4">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -13,7 +13,7 @@
     <property name="java.vm.specification.version" value="17"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-17-openjdk-amd64/lib"/>
-    <property name="sun.java.command" value="/home/TaskHub/backend/target/surefire/surefirebooter-20260407162507728_3.jar /home/TaskHub/backend/target/surefire 2026-04-07T16-25-07_655-jvmRun1 surefire-20260407162507728_1tmp surefire_0-20260407162507728_2tmp"/>
+    <property name="sun.java.command" value="/home/TaskHub/backend/target/surefire/surefirebooter-20260408082001225_3.jar /home/TaskHub/backend/target/surefire 2026-04-08T08-20-01_165-jvmRun1 surefire-20260408082001225_1tmp surefire_0-20260408082001225_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/home/TaskHub/backend/target/test-classes:/home/TaskHub/backend/target/classes:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.2.4/spring-boot-starter-web-3.2.4.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter/3.2.4/spring-boot-starter-3.2.4.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot/3.2.4/spring-boot-3.2.4.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.2.4/spring-boot-autoconfigure-3.2.4.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.2.4/spring-boot-starter-logging-3.2.4.jar:/home/marco/.m2/repository/ch/qos/logback/logback-classic/1.4.14/logback-classic-1.4.14.jar:/home/marco/.m2/repository/ch/qos/logback/logback-core/1.4.14/logback-core-1.4.14.jar:/home/marco/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.21.1/log4j-to-slf4j-2.21.1.jar:/home/marco/.m2/repository/org/apache/logging/log4j/log4j-api/2.21.1/log4j-api-2.21.1.jar:/home/marco/.m2/repository/org/slf4j/jul-to-slf4j/2.0.12/jul-to-slf4j-2.0.12.jar:/home/marco/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/home/marco/.m2/repository/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.2.4/spring-boot-starter-json-3.2.4.jar:/home/marco/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.15.4/jackson-datatype-jdk8-2.15.4.jar:/home/marco/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.15.4/jackson-datatype-jsr310-2.15.4.jar:/home/marco/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.15.4/jackson-module-parameter-names-2.15.4.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.2.4/spring-boot-starter-tomcat-3.2.4.jar:/home/marco/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.19/tomcat-embed-core-10.1.19.jar:/home/marco/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.19/tomcat-embed-websocket-10.1.19.jar:/home/marco/.m2/repository/org/springframework/spring-web/6.1.5/spring-web-6.1.5.jar:/home/marco/.m2/repository/org/springframework/spring-beans/6.1.5/spring-beans-6.1.5.jar:/home/marco/.m2/repository/io/micrometer/micrometer-observation/1.12.4/micrometer-observation-1.12.4.jar:/home/marco/.m2/repository/io/micrometer/micrometer-commons/1.12.4/micrometer-commons-1.12.4.jar:/home/marco/.m2/repository/org/springframework/spring-webmvc/6.1.5/spring-webmvc-6.1.5.jar:/home/marco/.m2/repository/org/springframework/spring-context/6.1.5/spring-context-6.1.5.jar:/home/marco/.m2/repository/org/springframework/spring-expression/6.1.5/spring-expression-6.1.5.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.2.4/spring-boot-starter-security-3.2.4.jar:/home/marco/.m2/repository/org/springframework/spring-aop/6.1.5/spring-aop-6.1.5.jar:/home/marco/.m2/repository/org/springframework/security/spring-security-config/6.2.3/spring-security-config-6.2.3.jar:/home/marco/.m2/repository/org/springframework/security/spring-security-core/6.2.3/spring-security-core-6.2.3.jar:/home/marco/.m2/repository/org/springframework/security/spring-security-crypto/6.2.3/spring-security-crypto-6.2.3.jar:/home/marco/.m2/repository/org/springframework/security/spring-security-web/6.2.3/spring-security-web-6.2.3.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-data-jpa/3.2.4/spring-boot-starter-data-jpa-3.2.4.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-aop/3.2.4/spring-boot-starter-aop-3.2.4.jar:/home/marco/.m2/repository/org/aspectj/aspectjweaver/1.9.21/aspectjweaver-1.9.21.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.2.4/spring-boot-starter-jdbc-3.2.4.jar:/home/marco/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/home/marco/.m2/repository/org/springframework/spring-jdbc/6.1.5/spring-jdbc-6.1.5.jar:/home/marco/.m2/repository/org/hibernate/orm/hibernate-core/6.4.4.Final/hibernate-core-6.4.4.Final.jar:/home/marco/.m2/repository/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/home/marco/.m2/repository/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/home/marco/.m2/repository/org/jboss/logging/jboss-logging/3.5.3.Final/jboss-logging-3.5.3.Final.jar:/home/marco/.m2/repository/org/hibernate/common/hibernate-commons-annotations/6.0.6.Final/hibernate-commons-annotations-6.0.6.Final.jar:/home/marco/.m2/repository/io/smallrye/jandex/3.1.2/jandex-3.1.2.jar:/home/marco/.m2/repository/com/fasterxml/classmate/1.6.0/classmate-1.6.0.jar:/home/marco/.m2/repository/net/bytebuddy/byte-buddy/1.14.12/byte-buddy-1.14.12.jar:/home/marco/.m2/repository/org/glassfish/jaxb/jaxb-runtime/4.0.5/jaxb-runtime-4.0.5.jar:/home/marco/.m2/repository/org/glassfish/jaxb/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/home/marco/.m2/repository/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/home/marco/.m2/repository/org/glassfish/jaxb/txw2/4.0.5/txw2-4.0.5.jar:/home/marco/.m2/repository/com/sun/istack/istack-commons-runtime/4.1.2/istack-commons-runtime-4.1.2.jar:/home/marco/.m2/repository/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/home/marco/.m2/repository/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/home/marco/.m2/repository/org/springframework/data/spring-data-jpa/3.2.4/spring-data-jpa-3.2.4.jar:/home/marco/.m2/repository/org/springframework/data/spring-data-commons/3.2.4/spring-data-commons-3.2.4.jar:/home/marco/.m2/repository/org/springframework/spring-orm/6.1.5/spring-orm-6.1.5.jar:/home/marco/.m2/repository/org/springframework/spring-tx/6.1.5/spring-tx-6.1.5.jar:/home/marco/.m2/repository/org/slf4j/slf4j-api/2.0.12/slf4j-api-2.0.12.jar:/home/marco/.m2/repository/org/springframework/spring-aspects/6.1.5/spring-aspects-6.1.5.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.2.4/spring-boot-starter-validation-3.2.4.jar:/home/marco/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.19/tomcat-embed-el-10.1.19.jar:/home/marco/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.1.Final/hibernate-validator-8.0.1.Final.jar:/home/marco/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/home/marco/.m2/repository/org/postgresql/postgresql/42.6.2/postgresql-42.6.2.jar:/home/marco/.m2/repository/org/checkerframework/checker-qual/3.31.0/checker-qual-3.31.0.jar:/home/marco/.m2/repository/io/jsonwebtoken/jjwt-api/0.12.3/jjwt-api-0.12.3.jar:/home/marco/.m2/repository/io/jsonwebtoken/jjwt-impl/0.12.3/jjwt-impl-0.12.3.jar:/home/marco/.m2/repository/io/jsonwebtoken/jjwt-jackson/0.12.3/jjwt-jackson-0.12.3.jar:/home/marco/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.4/jackson-databind-2.15.4.jar:/home/marco/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.4/jackson-annotations-2.15.4.jar:/home/marco/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.4/jackson-core-2.15.4.jar:/home/marco/.m2/repository/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.2.4/spring-boot-starter-test-3.2.4.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-test/3.2.4/spring-boot-test-3.2.4.jar:/home/marco/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.2.4/spring-boot-test-autoconfigure-3.2.4.jar:/home/marco/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/home/marco/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/home/marco/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/home/marco/.m2/repository/net/minidev/json-smart/2.5.0/json-smart-2.5.0.jar:/home/marco/.m2/repository/net/minidev/accessors-smart/2.5.0/accessors-smart-2.5.0.jar:/home/marco/.m2/repository/org/ow2/asm/asm/9.3/asm-9.3.jar:/home/marco/.m2/repository/org/assertj/assertj-core/3.24.2/assertj-core-3.24.2.jar:/home/marco/.m2/repository/org/awaitility/awaitility/4.2.0/awaitility-4.2.0.jar:/home/marco/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/home/marco/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/marco/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/home/marco/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/home/marco/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/home/marco/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:/home/marco/.m2/repository/org/mockito/mockito-core/5.7.0/mockito-core-5.7.0.jar:/home/marco/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.12/byte-buddy-agent-1.14.12.jar:/home/marco/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/home/marco/.m2/repository/org/mockito/mockito-junit-jupiter/5.7.0/mockito-junit-jupiter-5.7.0.jar:/home/marco/.m2/repository/org/skyscreamer/jsonassert/1.5.1/jsonassert-1.5.1.jar:/home/marco/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/home/marco/.m2/repository/org/springframework/spring-core/6.1.5/spring-core-6.1.5.jar:/home/marco/.m2/repository/org/springframework/spring-jcl/6.1.5/spring-jcl-6.1.5.jar:/home/marco/.m2/repository/org/springframework/spring-test/6.1.5/spring-test-6.1.5.jar:/home/marco/.m2/repository/org/xmlunit/xmlunit-core/2.9.1/xmlunit-core-2.9.1.jar:/home/marco/.m2/repository/com/h2database/h2/2.2.224/h2-2.2.224.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="/home/TaskHub/backend/target/surefire/surefirebooter-20260407162507728_3.jar"/>
+    <property name="surefire.real.class.path" value="/home/TaskHub/backend/target/surefire/surefirebooter-20260408082001225_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.18+8-Ubuntu-124.04.1"/>
     <property name="user.name" value="marco"/>
@@ -47,7 +47,7 @@
     <property name="user.dir" value="/home/TaskHub/backend"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="1061315"/>
+    <property name="PID" value="13354"/>
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
@@ -58,9 +58,19 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testCreateTask_Returns201" classname="com.taskhub.controller.TaskControllerTest" time="0.322">
-    <system-out><![CDATA[16:25:08.474 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.taskhub.controller.TaskControllerTest]: TaskControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-16:25:08.611 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.taskhub.App for test class com.taskhub.controller.TaskControllerTest
+  <testcase name="testCreateTask_Returns201" classname="com.taskhub.controller.TaskControllerTest" time="1.378">
+    <failure message="Status expected:&lt;201&gt; but was:&lt;400&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Status expected:<201> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.taskhub.controller.TaskControllerTest.testCreateTask_Returns201(TaskControllerTest.java:85)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+]]></failure>
+    <system-out><![CDATA[08:20:01.878 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.taskhub.controller.TaskControllerTest]: TaskControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+08:20:01.990 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.taskhub.App for test class com.taskhub.controller.TaskControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -70,40 +80,229 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.4)
 
-2026-04-07T16:25:08.921-05:00  INFO 1061315 --- [           main] c.taskhub.controller.TaskControllerTest  : Starting TaskControllerTest using Java 17.0.18 with PID 1061315 (started by marco in /home/TaskHub/backend)
-2026-04-07T16:25:08.923-05:00  INFO 1061315 --- [           main] c.taskhub.controller.TaskControllerTest  : No active profile set, falling back to 1 default profile: "default"
-2026-04-07T16:25:09.647-05:00  INFO 1061315 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-04-07T16:25:09.715-05:00  INFO 1061315 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 59 ms. Found 4 JPA repository interfaces.
-2026-04-07T16:25:10.369-05:00  INFO 1061315 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-04-07T16:25:10.461-05:00  INFO 1061315 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
-2026-04-07T16:25:10.504-05:00  INFO 1061315 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-04-07T16:25:10.759-05:00  INFO 1061315 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-04-07T16:25:10.785-05:00  INFO 1061315 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-04-07T16:25:10.961-05:00  INFO 1061315 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2026-04-07T16:25:10.962-05:00  INFO 1061315 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-04-07T16:25:10.988-05:00  WARN 1061315 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-04-07T16:25:11.726-05:00  INFO 1061315 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-04-07T16:25:11.769-05:00  INFO 1061315 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-04-07T16:25:12.338-05:00  WARN 1061315 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-04-07T16:25:12.375-05:00  WARN 1061315 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+2026-04-08T08:20:02.339-05:00  INFO 13354 --- [           main] c.taskhub.controller.TaskControllerTest  : Starting TaskControllerTest using Java 17.0.18 with PID 13354 (started by marco in /home/TaskHub/backend)
+2026-04-08T08:20:02.340-05:00  INFO 13354 --- [           main] c.taskhub.controller.TaskControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2026-04-08T08:20:02.955-05:00  INFO 13354 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-08T08:20:03.012-05:00  INFO 13354 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 4 JPA repository interfaces.
+2026-04-08T08:20:03.481-05:00  INFO 13354 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-08T08:20:03.529-05:00  INFO 13354 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-04-08T08:20:03.570-05:00  INFO 13354 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-08T08:20:03.768-05:00  INFO 13354 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-08T08:20:03.810-05:00  INFO 13354 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-08T08:20:03.959-05:00  INFO 13354 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-04-08T08:20:03.960-05:00  INFO 13354 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-08T08:20:03.976-05:00  WARN 13354 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-08T08:20:04.751-05:00  INFO 13354 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-08T08:20:04.807-05:00  INFO 13354 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-08T08:20:05.320-05:00  WARN 13354 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-08T08:20:05.347-05:00  WARN 13354 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 908e78d5-7f76-4887-bb75-001ee1aaaced
+Using generated security password: 7b63eb0c-f23d-488a-b83e-a54804d1a78d
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2026-04-07T16:25:12.531-05:00  INFO 1061315 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7f1b2f07, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@674d2b8b, org.springframework.security.web.context.SecurityContextHolderFilter@33a58fcb, org.springframework.security.web.header.HeaderWriterFilter@4198921f, org.springframework.security.web.authentication.logout.LogoutFilter@524418a2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@328e687e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@434a72f2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@399a5a52, org.springframework.security.web.access.ExceptionTranslationFilter@2c955487, org.springframework.security.web.access.intercept.AuthorizationFilter@20e7152a]
-2026-04-07T16:25:13.243-05:00  INFO 1061315 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2026-04-07T16:25:13.244-05:00  INFO 1061315 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2026-04-07T16:25:13.246-05:00  INFO 1061315 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
-2026-04-07T16:25:13.264-05:00  INFO 1061315 --- [           main] c.taskhub.controller.TaskControllerTest  : Started TaskControllerTest in 4.538 seconds (process running for 5.471)
-2026-04-07T16:25:13.556-05:00  INFO 1061315 --- [           main] com.taskhub.service.TaskService          : Task created: id=1 for userId=1
+2026-04-08T08:20:05.460-05:00  INFO 13354 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7b55fc83, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3615f8d9, org.springframework.security.web.context.SecurityContextHolderFilter@7a57c5d9, org.springframework.security.web.header.HeaderWriterFilter@723f8990, org.springframework.web.filter.CorsFilter@5d200dce, org.springframework.security.web.authentication.logout.LogoutFilter@5746609e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2be208db, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5ed463b7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1a59500b, org.springframework.security.web.access.ExceptionTranslationFilter@703947bd, org.springframework.security.web.access.intercept.AuthorizationFilter@c3836b6]
+2026-04-08T08:20:05.967-05:00  INFO 13354 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-04-08T08:20:05.968-05:00  INFO 13354 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-04-08T08:20:05.970-05:00  INFO 13354 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-04-08T08:20:05.995-05:00  INFO 13354 --- [           main] c.taskhub.controller.TaskControllerTest  : Started TaskControllerTest in 3.858 seconds (process running for 4.721)
+2026-04-08T08:20:07.379-05:00 ERROR 13354 --- [           main] c.t.controller.GlobalExceptionHandler    : Validation error [/api/v1/tasks/create]: The given id must not be null
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/tasks/create
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJ0ZXN0QHRhc2todWIuY29tIiwiaWF0IjoxNzc1NjU0NDA3LCJleHAiOjE3NzU3NDA4MDd9.X0hJVsvC8LRwttCJH4LeXDfvCptc-R-k2F_49Uvqtsloa9TFXnp-7YJU5WNhu4eD", Content-Length:"134"]
+             Body = {"title":"Integration Test Task","description":"Testing via MockMvc","categoryId":null,"priority":"HIGH","dueDate":null,"tagIds":null}
+    Session Attrs = {}
+
+Handler:
+             Type = com.taskhub.controller.TaskController
+           Method = com.taskhub.controller.TaskController#createTask(Long, TaskCreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = org.springframework.dao.InvalidDataAccessApiUsageException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"status":400,"error":"VALIDATION_ERROR","message":"The given id must not be null","timestamp":"2026-04-08T08:20:07.380818015","path":"/api/v1/tasks/create"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
 ]]></system-out>
   </testcase>
-  <testcase name="testFilterTasks_WithMultipleParams" classname="com.taskhub.controller.TaskControllerTest" time="0.065"/>
-  <testcase name="testInvalidInput_Returns400" classname="com.taskhub.controller.TaskControllerTest" time="0.027">
-    <system-out><![CDATA[2026-04-07T16:25:13.696-05:00  WARN 1061315 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.taskhub.dto.TaskResponse> com.taskhub.controller.TaskController.createTask(java.lang.Long,com.taskhub.dto.TaskCreateRequest) with 2 errors: [Field error in object 'taskCreateRequest' on field 'title': rejected value []; codes [Size.taskCreateRequest.title,Size.title,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskCreateRequest.title,title]; arguments []; default message [title],255,1]; default message [Title must be between 1 and 255 characters]] [Field error in object 'taskCreateRequest' on field 'title': rejected value []; codes [NotBlank.taskCreateRequest.title,NotBlank.title,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskCreateRequest.title,title]; arguments []; default message [title]]; default message [Title is required]] ]
+  <testcase name="testFilterTasks_WithMultipleParams" classname="com.taskhub.controller.TaskControllerTest" time="0.06">
+    <failure message="Status expected:&lt;200&gt; but was:&lt;400&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Status expected:<200> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.taskhub.controller.TaskControllerTest.testFilterTasks_WithMultipleParams(TaskControllerTest.java:179)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+]]></failure>
+    <system-out><![CDATA[2026-04-08T08:20:07.464-05:00 ERROR 13354 --- [           main] c.t.controller.GlobalExceptionHandler    : Validation error [/api/v1/tasks/filter]: The given id must not be null
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/v1/tasks/filter
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJ0ZXN0QHRhc2todWIuY29tIiwiaWF0IjoxNzc1NjU0NDA3LCJleHAiOjE3NzU3NDA4MDd9.DR7e-zYFYLOAtpy91mDsCDy-8YRiVmOh5-HnDtxpNiBPG5kkWz7wFSz68GcohJtY", Content-Length:"141"]
+             Body = {"categoryId":null,"tagId":null,"priority":"HIGH","isCompleted":false,"dueDateFrom":null,"dueDateTo":null,"sortBy":"title","sortOrder":"ASC"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.taskhub.controller.TaskController
+           Method = com.taskhub.controller.TaskController#filterTasks(Long, TaskFilterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = org.springframework.dao.InvalidDataAccessApiUsageException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"status":400,"error":"VALIDATION_ERROR","message":"The given id must not be null","timestamp":"2026-04-08T08:20:07.465230021","path":"/api/v1/tasks/filter"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
 ]]></system-out>
   </testcase>
-  <testcase name="testFilterTasks_WithCategoryId" classname="com.taskhub.controller.TaskControllerTest" time="0.048"/>
-  <testcase name="testGetTasks_Returns200" classname="com.taskhub.controller.TaskControllerTest" time="0.031"/>
+  <testcase name="testInvalidInput_Returns400" classname="com.taskhub.controller.TaskControllerTest" time="0.037">
+    <system-out><![CDATA[2026-04-08T08:20:07.505-05:00  WARN 13354 --- [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [1] in public org.springframework.http.ResponseEntity<com.taskhub.dto.TaskResponse> com.taskhub.controller.TaskController.createTask(java.lang.Long,com.taskhub.dto.TaskCreateRequest) with 2 errors: [Field error in object 'taskCreateRequest' on field 'title': rejected value []; codes [NotBlank.taskCreateRequest.title,NotBlank.title,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskCreateRequest.title,title]; arguments []; default message [title]]; default message [Title is required]] [Field error in object 'taskCreateRequest' on field 'title': rejected value []; codes [Size.taskCreateRequest.title,Size.title,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [taskCreateRequest.title,title]; arguments []; default message [title],255,1]; default message [Title must be between 1 and 255 characters]] ]
+]]></system-out>
+  </testcase>
+  <testcase name="testFilterTasks_WithCategoryId" classname="com.taskhub.controller.TaskControllerTest" time="0.028">
+    <failure message="Status expected:&lt;200&gt; but was:&lt;400&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: Status expected:<200> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.taskhub.controller.TaskControllerTest.testFilterTasks_WithCategoryId(TaskControllerTest.java:151)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+]]></failure>
+    <system-out><![CDATA[2026-04-08T08:20:07.532-05:00 ERROR 13354 --- [           main] c.t.controller.GlobalExceptionHandler    : Validation error [/api/v1/tasks/filter]: The given id must not be null
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/v1/tasks/filter
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI0IiwiZW1haWwiOiJ0ZXN0QHRhc2todWIuY29tIiwiaWF0IjoxNzc1NjU0NDA3LCJleHAiOjE3NzU3NDA4MDd9.9kZ9n2emPDCobkuO7NuEWYIepc1oq5dGgqSIcuKdC29gt6unApgY646Dj6IfZIYZ", Content-Length:"140"]
+             Body = {"categoryId":1,"tagId":null,"priority":null,"isCompleted":null,"dueDateFrom":null,"dueDateTo":null,"sortBy":"createdAt","sortOrder":"DESC"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.taskhub.controller.TaskController
+           Method = com.taskhub.controller.TaskController#filterTasks(Long, TaskFilterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = org.springframework.dao.InvalidDataAccessApiUsageException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = {"status":400,"error":"VALIDATION_ERROR","message":"The given id must not be null","timestamp":"2026-04-08T08:20:07.533100837","path":"/api/v1/tasks/filter"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
+  <testcase name="testGetTasks_Returns200" classname="com.taskhub.controller.TaskControllerTest" time="0.068">
+    <failure message="JSON path &quot;$&quot;&#10;Expected: a collection with size &lt;2&gt;&#10;     but: collection size was &lt;0&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+JSON path "$"
+Expected: a collection with size <2>
+     but: collection size was <0>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:74)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$0(JsonPathResultMatchers.java:87)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.taskhub.controller.TaskControllerTest.testGetTasks_Returns200(TaskControllerTest.java:118)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+]]></failure>
+    <system-out><![CDATA[
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/v1/tasks
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJ0ZXN0QHRhc2todWIuY29tIiwiaWF0IjoxNzc1NjU0NDA3LCJleHAiOjE3NzU3NDA4MDd9.ZocdElGlC1kXp_H1qennUhwkdHNnXTbtEBkbBy8XHN3RHqS2TW1vDbCHDdbNfMYA"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.taskhub.controller.TaskController
+           Method = com.taskhub.controller.TaskController#getUserTasks(Long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY"]
+     Content type = application/json
+             Body = []
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  </testcase>
 </testsuite>

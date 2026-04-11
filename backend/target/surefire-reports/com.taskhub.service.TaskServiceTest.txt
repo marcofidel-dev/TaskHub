@@ -1,4 +1,40 @@
 -------------------------------------------------------------------------------
 Test set: com.taskhub.service.TaskServiceTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.150 s -- in com.taskhub.service.TaskServiceTest
+Tests run: 13, Failures: 1, Errors: 2, Skipped: 0, Time elapsed: 0.177 s <<< FAILURE! -- in com.taskhub.service.TaskServiceTest
+com.taskhub.service.TaskServiceTest.testCreateTask_UserNotFound -- Time elapsed: 0.115 s <<< FAILURE!
+java.lang.AssertionError: 
+
+Expecting actual throwable to be an instance of:
+  jakarta.persistence.EntityNotFoundException
+but was:
+  java.lang.IllegalArgumentException: User not found
+	at com.taskhub.service.TaskService.lambda$createTask$0(TaskService.java:38)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.taskhub.service.TaskService.createTask(TaskService.java:38)
+	...(77 remaining lines not displayed - this can be changed with Assertions.setMaxStackTraceElementsDisplayed)
+	at com.taskhub.service.TaskServiceTest.testCreateTask_UserNotFound(TaskServiceTest.java:99)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.taskhub.service.TaskServiceTest.testCreateTask_WithCategoryAndTags -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.IllegalArgumentException: User not found
+	at com.taskhub.service.TaskService.lambda$createTask$0(TaskService.java:38)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.taskhub.service.TaskService.createTask(TaskService.java:38)
+	at com.taskhub.service.TaskServiceTest.testCreateTask_WithCategoryAndTags(TaskServiceTest.java:133)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+com.taskhub.service.TaskServiceTest.testCreateTask_Success -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.IllegalArgumentException: User not found
+	at com.taskhub.service.TaskService.lambda$createTask$0(TaskService.java:38)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.taskhub.service.TaskService.createTask(TaskService.java:38)
+	at com.taskhub.service.TaskServiceTest.testCreateTask_Success(TaskServiceTest.java:83)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+

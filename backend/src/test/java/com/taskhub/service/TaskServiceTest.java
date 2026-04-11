@@ -106,6 +106,15 @@ class TaskServiceTest {
     void testCreateTask_WithCategoryAndTags() {
         when(userRepository.existsById(USER_ID)).thenReturn(true);
 
+        // Mock category validation
+        Category mockCategory = Category.builder()
+                .id(5L)
+                .name("Work")
+                .userId(USER_ID)
+                .build();
+        when(categoryRepository.findByIdAndUserId(5L, USER_ID))
+                .thenReturn(Optional.of(mockCategory));
+
         Tag tag1 = Tag.builder().id(1L).name("urgent").color("#FF0000").userId(USER_ID).build();
         Tag tag2 = Tag.builder().id(2L).name("work").color("#0000FF").userId(USER_ID).build();
         when(tagRepository.findByIdInAndUserId(List.of(1L, 2L), USER_ID))
@@ -258,7 +267,7 @@ class TaskServiceTest {
         List<Task> result = taskService.filterTasks(USER_ID, filters);
 
         assertThat(result).hasSize(2);
-        assertThat(result).allMatch(Task::isCompleted);
+        assertThat(result).allMatch(t -> Boolean.TRUE.equals(t.getIsCompleted()));
     }
 
     @Test

@@ -22,7 +22,7 @@ public class TaskResponse {
     private Long categoryId;
     private String priority;
     private LocalDateTime dueDate;
-    private boolean isCompleted;
+    private Boolean isCompleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -1,5 +1,8 @@
 package com.taskhub.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.taskhub.config.LocalDateTimeDeserializer;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -23,6 +26,7 @@ public class TaskCreateRequest {
 
     private String priority = "MEDIUM";
 
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime dueDate;
 
     private List<Long> tagIds;

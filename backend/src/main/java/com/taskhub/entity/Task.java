@@ -52,7 +52,7 @@ public class Task {
 
     @Column(nullable = false)
     @Builder.Default
-    private boolean isCompleted = false;
+    private Boolean isCompleted = false;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

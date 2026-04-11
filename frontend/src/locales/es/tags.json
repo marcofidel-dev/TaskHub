@@ -1,0 +1,18 @@
+{
+  "my_tags": "Mis Etiquetas",
+  "new_tag": "Nueva Etiqueta",
+  "tag_name": "Nombre de la Etiqueta",
+  "tag_name_placeholder": "ej. Urgente, Bug, Funcionalidad...",
+  "tag_created": "Etiqueta creada exitosamente",
+  "tag_deleted": "Etiqueta eliminada",
+  "no_tags": "No hay etiquetas",
+  "no_tags_subtitle": "Crea etiquetas para etiquetar y filtrar tus tareas.",
+  "create_tag": "Crear Etiqueta",
+  "failed_to_load": "Error al cargar las etiquetas",
+  "failed_to_create": "Error al crear la etiqueta",
+  "failed_to_delete": "Error al eliminar la etiqueta",
+  "name_required": "El nombre es requerido",
+  "delete_confirm": "¿Eliminar esta etiqueta? Se quitará de todas las tareas.",
+  "tag_count_one": "{{count}} etiqueta",
+  "tag_count_other": "{{count}} etiquetas"
+}

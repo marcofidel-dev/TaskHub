@@ -19,7 +19,7 @@ public class TaskResponseWithDetails {
     private Long categoryId;
     private String priority;
     private LocalDateTime dueDate;
-    private boolean isCompleted;
+    private Boolean isCompleted;
     private CategoryResponse category;
     private List<TagResponse> tags;
     private LocalDateTime createdAt;

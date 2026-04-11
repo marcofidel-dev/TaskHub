@@ -1,0 +1,18 @@
+{
+  "my_tags": "My Tags",
+  "new_tag": "New Tag",
+  "tag_name": "Tag Name",
+  "tag_name_placeholder": "e.g. Urgent, Bug, Feature…",
+  "tag_created": "Tag created successfully",
+  "tag_deleted": "Tag deleted",
+  "no_tags": "No tags yet",
+  "no_tags_subtitle": "Create tags to label and filter your tasks.",
+  "create_tag": "Create Tag",
+  "failed_to_load": "Failed to load tags",
+  "failed_to_create": "Failed to create tag",
+  "failed_to_delete": "Failed to delete tag",
+  "name_required": "Name is required",
+  "delete_confirm": "Delete this tag? It will be removed from all tasks.",
+  "tag_count_one": "{{count}} tag",
+  "tag_count_other": "{{count}} tags"
+}

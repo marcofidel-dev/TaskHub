@@ -1,5 +1,6 @@
 package com.taskhub.controller;
 
+import com.taskhub.dto.ApiErrorResponse;
 import com.taskhub.dto.TaskCreateRequest;
 import com.taskhub.dto.TaskFilterRequest;
 import com.taskhub.dto.TaskResponse;
@@ -7,9 +8,11 @@ import com.taskhub.dto.TaskResponseWithDetails;
 import com.taskhub.dto.TaskUpdateRequest;
 import com.taskhub.entity.Task;
 import com.taskhub.security.CurrentUser;
+import com.taskhub.security.JwtProvider;
 import com.taskhub.service.TaskService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,15 +28,48 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final JwtProvider jwtProvider;
 
     // POST /api/v1/tasks/create
     @PostMapping("/create")
-    public ResponseEntity<TaskResponse> createTask(
-            @CurrentUser Long userId,
-            @Valid @RequestBody TaskCreateRequest request) {
+    public ResponseEntity<?> createTask(
+            @CurrentUser(required = false) Long userId,
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
+            @Valid @RequestBody TaskCreateRequest req) {
 
-        Task task = taskService.createTask(userId, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.mapToResponse(task));
+        try {
+            // Fallback: extract userId from header if resolver returned null
+            if (userId == null && authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.substring(7);
+                log.warn("[createTask] @CurrentUser returned null — falling back to manual token extraction");
+                if (jwtProvider.validateToken(token)) {
+                    userId = jwtProvider.getUserIdFromToken(token);
+                    log.info("[createTask] Fallback userId: {}", userId);
+                }
+            }
+
+            if (userId == null) {
+                return ResponseEntity.status(401)
+                        .body(new ApiErrorResponse(401, "UNAUTHORIZED", "Valid JWT token required",
+                                LocalDateTime.now(), null));
+            }
+
+            if (req.getCategoryId() != null && req.getCategoryId() <= 0) {
+                req.setCategoryId(null);
+            }
+
+            Task task = taskService.createTask(userId, req);
+            return ResponseEntity.status(HttpStatus.CREATED).body(taskService.mapToResponse(task));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400)
+                    .body(new ApiErrorResponse(400, "VALIDATION_ERROR", e.getMessage(),
+                            LocalDateTime.now(), null));
+        } catch (Exception e) {
+            log.error("Error creating task", e);
+            return ResponseEntity.status(500)
+                    .body(new ApiErrorResponse(500, "SERVER_ERROR", "Failed to create task",
+                            LocalDateTime.now(), null));
+        }
     }
 
     // GET /api/v1/tasks
@@ -88,7 +124,7 @@ public class TaskController {
 
     // PATCH /api/v1/tasks/{id}/complete
     @PatchMapping("/{id}/complete")
-    public ResponseEntity<TaskResponse> completeTask(
+    public ResponseEntity<?> completeTask(
             @PathVariable Long id,
             @CurrentUser Long userId) {
 
@@ -96,29 +132,42 @@ public class TaskController {
             Task completed = taskService.completeTask(id, userId);
             return ResponseEntity.ok(taskService.mapToResponse(completed));
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404)
+                    .body(new ApiErrorResponse(404, "NOT_FOUND", e.getMessage(),
+                            LocalDateTime.now(), null));
+        } catch (Exception e) {
+            log.error("Error toggling task completion: taskId={} userId={}", id, userId, e);
+            return ResponseEntity.status(500)
+                    .body(new ApiErrorResponse(500, "SERVER_ERROR",
+                            "Failed to update task completion", LocalDateTime.now(), null));
         }
     }
 
-    // GET /api/v1/tasks/filter
-    @GetMapping("/filter")
-    public ResponseEntity<List<TaskResponseWithDetails>> filterTasks(
+    // POST /api/v1/tasks/filter
+    @PostMapping("/filter")
+    public ResponseEntity<?> filterTasks(
             @CurrentUser Long userId,
-            @RequestBody(required = false) TaskFilterRequest filters) {
+            @RequestBody TaskFilterRequest filterRequest) {
 
-        if (filters == null) {
-            filters = new TaskFilterRequest();
-        }
         try {
-            List<TaskResponseWithDetails> result = taskService.filterTasks(userId, filters)
+            if (userId == null) {
+                return ResponseEntity.status(401)
+                        .body(new ApiErrorResponse(401, "UNAUTHORIZED",
+                                "Invalid or missing authentication token",
+                                LocalDateTime.now(), null));
+            }
+
+            List<TaskResponseWithDetails> tasks = taskService.filterTasks(userId, filterRequest)
                     .stream()
                     .map(taskService::mapToDetailedResponse)
                     .toList();
-            return ResponseEntity.ok(result);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(tasks);
+        } catch (Exception e) {
+            log.error("Error filtering tasks", e);
+            return ResponseEntity.status(500)
+                    .body(new ApiErrorResponse(500, "SERVER_ERROR",
+                            "Failed to filter tasks",
+                            LocalDateTime.now(), null));
         }
     }
 }

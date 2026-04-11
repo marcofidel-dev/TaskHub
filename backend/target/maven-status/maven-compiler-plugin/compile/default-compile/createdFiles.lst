@@ -29,6 +29,7 @@ com/taskhub/dto/CategoryCreateRequest$CategoryCreateRequestBuilder.class
 com/taskhub/dto/TaskResponse.class
 com/taskhub/dto/UserResponse$UserResponseBuilder.class
 com/taskhub/entity/User$UserBuilder.class
+com/taskhub/config/LocalDateTimeDeserializer.class
 com/taskhub/dto/CategoryResponse$CategoryResponseBuilder.class
 com/taskhub/dto/TagResponse.class
 com/taskhub/service/TaskService.class
@@ -45,6 +46,7 @@ com/taskhub/controller/TaskController.class
 com/taskhub/dto/TaskCreateRequest.class
 com/taskhub/dto/RegisterRequest.class
 com/taskhub/security/CurrentUser.class
+com/taskhub/config/WebMvcConfig.class
 com/taskhub/entity/Category.class
 com/taskhub/entity/User$SubscriptionTier.class
 com/taskhub/controller/AuthController.class

@@ -5,6 +5,7 @@
 /home/TaskHub/backend/src/main/java/com/taskhub/repository/CategoryRepository.java
 /home/TaskHub/backend/src/main/java/com/taskhub/entity/User.java
 /home/TaskHub/backend/src/main/java/com/taskhub/repository/TagRepository.java
+/home/TaskHub/backend/src/main/java/com/taskhub/config/LocalDateTimeDeserializer.java
 /home/TaskHub/backend/src/main/java/com/taskhub/repository/UserRepository.java
 /home/TaskHub/backend/src/main/java/com/taskhub/security/SecurityConfig.java
 /home/TaskHub/backend/src/main/java/com/taskhub/App.java
@@ -17,6 +18,7 @@
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/LoginRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/entity/Task.java
 /home/TaskHub/backend/src/main/java/com/taskhub/entity/Tag.java
+/home/TaskHub/backend/src/main/java/com/taskhub/config/WebMvcConfig.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/TagCreateRequest.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/TaskResponse.java
 /home/TaskHub/backend/src/main/java/com/taskhub/dto/CategoryResponse.java
