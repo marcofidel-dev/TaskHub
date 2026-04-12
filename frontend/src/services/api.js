@@ -30,37 +30,37 @@ api.interceptors.response.use(
 
 export const auth = {
   register: (email, username, password) =>
-    api.post('/auth/register', { email, username, password }),
+    api.post('/v1/auth/register', { email, username, password }),
   login: (email, password) =>
-    api.post('/auth/login', { email, password }),
+    api.post('/v1/auth/login', { email, password }),
   refresh: (refreshToken) =>
-    api.post('/auth/refresh', { refreshToken }),
+    api.post('/v1/auth/refresh', { refreshToken }),
 };
 
 export const tasks = {
-  create: (taskData) => api.post('/tasks/create', taskData),
-  list: () => api.get('/tasks'),
-  listFull: (filterData = {}) => api.post('/tasks/filter', filterData),
-  getById: (id) => api.get(`/tasks/${id}`),
-  update: (id, taskData) => api.put(`/tasks/${id}`, taskData),
-  delete: (id) => api.delete(`/tasks/${id}`),
-  complete: (id) => api.patch(`/tasks/${id}/complete`),
-  filter: (filterData) => api.post('/tasks/filter', filterData),
-  addTag: (taskId, tagId) => api.post(`/tasks/${taskId}/tags/${tagId}`),
-  removeTag: (taskId, tagId) => api.delete(`/tasks/${taskId}/tags/${tagId}`),
+  create: (taskData) => api.post('/v1/tasks/create', taskData),
+  list: () => api.get('/v1/tasks'),
+  listFull: (filterData = {}) => api.post('/v1/tasks/filter', filterData),
+  getById: (id) => api.get(`/v1/tasks/${id}`),
+  update: (id, taskData) => api.put(`/v1/tasks/${id}`, taskData),
+  delete: (id) => api.delete(`/v1/tasks/${id}`),
+  complete: (id) => api.patch(`/v1/tasks/${id}/complete`),
+  filter: (filterData) => api.post('/v1/tasks/filter', filterData),
+  addTag: (taskId, tagId) => api.post(`/v1/tasks/${taskId}/tags/${tagId}`),
+  removeTag: (taskId, tagId) => api.delete(`/v1/tasks/${taskId}/tags/${tagId}`),
 };
 
 export const categories = {
-  create: (catData) => api.post('/categories', catData),
-  list: () => api.get('/categories'),
-  update: (id, catData) => api.put(`/categories/${id}`, catData),
-  delete: (id) => api.delete(`/categories/${id}`),
+  create: (catData) => api.post('/v1/categories', catData),
+  list: () => api.get('/v1/categories'),
+  update: (id, catData) => api.put(`/v1/categories/${id}`, catData),
+  delete: (id) => api.delete(`/v1/categories/${id}`),
 };
 
 export const tags = {
-  create: (tagData) => api.post('/tags', tagData),
-  list: () => api.get('/tags'),
-  delete: (id) => api.delete(`/tags/${id}`),
+  create: (tagData) => api.post('/v1/tags', tagData),
+  list: () => api.get('/v1/tags'),
+  delete: (id) => api.delete(`/v1/tags/${id}`),
 };
 
 export default api;
