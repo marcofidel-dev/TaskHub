@@ -53,7 +53,14 @@ export function useAuth() {
     setError(null);
     setLoading(true);
     try {
-      await auth.register(email, username, password);
+      const res = await auth.register(email, username, password);
+      const { accessToken: at, refreshToken: rt, user: u } = res.data;
+      localStorage.setItem('accessToken', at);
+      localStorage.setItem('refreshToken', rt);
+      localStorage.setItem('user', JSON.stringify(u));
+      setAccessToken(at);
+      setRefreshToken(rt);
+      setUser(u);
       return true;
     } catch (err) {
       const msg = err.response?.data?.message || 'Registration failed';
@@ -88,6 +95,8 @@ export function useAuth() {
     }
   }, [logout]);
 
+  const clearError = useCallback(() => setError(null), []);
+
   return {
     user,
     accessToken,
@@ -98,6 +107,7 @@ export function useAuth() {
     register,
     logout,
     refreshAccessToken,
+    clearError,
     isAuthenticated: !!accessToken,
   };
 }

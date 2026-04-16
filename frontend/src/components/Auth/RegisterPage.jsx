@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function RegisterPage() {
-  const { register, loading, error } = useAuth();
+  const { register, loading, error, clearError } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation(['auth', 'common']);
+
+  useEffect(() => { clearError(); }, [clearError]);
 
   const [form, setForm] = useState({ email: '', username: '', password: '', confirmPassword: '' });
   const [validationErrors, setValidationErrors] = useState({});
@@ -27,8 +29,9 @@ export default function RegisterPage() {
     else if (form.username.length < 3 || form.username.length > 30)
       errs.username = t('auth:username_length');
     if (!form.password) errs.password = t('auth:password_required');
-    else if (form.password.length < 8)
-      errs.password = t('auth:password_min_length');
+    else if (form.password.length < 8) errs.password = t('auth:password_min_length');
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(form.password))
+      errs.password = t('auth:password_complexity');
     if (form.password !== form.confirmPassword)
       errs.confirmPassword = t('auth:passwords_dont_match');
     return errs;
@@ -47,7 +50,7 @@ export default function RegisterPage() {
       return;
     }
     const ok = await register(form.email, form.username, form.password);
-    if (ok) navigate('/login');
+    if (ok) navigate('/dashboard', { replace: true });
   };
 
   return (
