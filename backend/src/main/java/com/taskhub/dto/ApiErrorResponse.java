@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -18,4 +19,6 @@ public class ApiErrorResponse {
     private String message;
     private LocalDateTime timestamp;
     private String path;
+    /** Field-level validation errors — only present on 400 validation failures. */
+    private Map<String, String> fieldErrors;
 }

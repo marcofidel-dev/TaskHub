@@ -13,6 +13,7 @@ com/taskhub/entity/Task.class
 com/taskhub/dto/TagResponse$TagResponseBuilder.class
 com/taskhub/dto/ApiErrorResponse.class
 com/taskhub/controller/GlobalExceptionHandler.class
+com/taskhub/entity/TokenBlacklist$TokenBlacklistBuilder.class
 com/taskhub/controller/CategoryController.class
 com/taskhub/dto/LoginRequest$LoginRequestBuilder.class
 com/taskhub/dto/LoginRequest.class
@@ -20,6 +21,7 @@ com/taskhub/dto/TaskResponseWithDetails.class
 com/taskhub/dto/TaskFilterRequest.class
 com/taskhub/dto/RegisterRequest$RegisterRequestBuilder.class
 com/taskhub/entity/Tag.class
+com/taskhub/entity/TokenBlacklist.class
 com/taskhub/entity/Task$TaskBuilder.class
 com/taskhub/dto/CategoryResponse.class
 com/taskhub/dto/TaskResponseWithDetails$TaskResponseWithDetailsBuilder.class
@@ -27,16 +29,19 @@ com/taskhub/dto/AuthResponse.class
 com/taskhub/service/UserService.class
 com/taskhub/dto/CategoryCreateRequest$CategoryCreateRequestBuilder.class
 com/taskhub/dto/TaskResponse.class
+com/taskhub/config/RateLimitConfig.class
 com/taskhub/dto/UserResponse$UserResponseBuilder.class
 com/taskhub/entity/User$UserBuilder.class
 com/taskhub/config/LocalDateTimeDeserializer.class
 com/taskhub/dto/CategoryResponse$CategoryResponseBuilder.class
+com/taskhub/security/SecurityUtil.class
 com/taskhub/dto/TagResponse.class
 com/taskhub/service/TaskService.class
 com/taskhub/App.class
 com/taskhub/dto/ErrorResponse.class
 com/taskhub/dto/TaskResponse$TaskResponseBuilder.class
 com/taskhub/security/JwtProvider.class
+com/taskhub/interceptor/RateLimitInterceptor.class
 com/taskhub/service/CategoryService.class
 com/taskhub/dto/TaskFilterRequest$TaskFilterRequestBuilder.class
 com/taskhub/dto/ErrorResponse$ErrorResponseBuilder.class
@@ -52,6 +57,7 @@ com/taskhub/entity/User$SubscriptionTier.class
 com/taskhub/controller/AuthController.class
 com/taskhub/dto/CategoryCreateRequest.class
 com/taskhub/security/SecurityConfig.class
+com/taskhub/repository/TokenBlacklistRepository.class
 com/taskhub/dto/TaskUpdateRequest.class
 com/taskhub/entity/Tag$TagBuilder.class
 com/taskhub/service/TagService.class

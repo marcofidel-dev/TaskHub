@@ -1,6 +1,8 @@
 package com.taskhub.security;
 
+import com.taskhub.entity.TokenBlacklist;
 import com.taskhub.entity.User;
+import com.taskhub.repository.TokenBlacklistRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Component
@@ -18,17 +22,24 @@ public class JwtProvider {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    @Value("${jwt.expiration}")
-    private long jwtExpiration;
+    @Value("${jwt.access-token.expiration:900000}")
+    private long accessTokenExpiration;
 
-    private static final long REFRESH_EXPIRATION_MS = 7L * 24 * 60 * 60 * 1000; // 7 days
+    @Value("${jwt.refresh-token.expiration:604800000}")
+    private long refreshTokenExpiration;
+
+    private final TokenBlacklistRepository tokenBlacklistRepository;
+
+    public JwtProvider(TokenBlacklistRepository tokenBlacklistRepository) {
+        this.tokenBlacklistRepository = tokenBlacklistRepository;
+    }
 
     public String generateAccessToken(Long userId, String email) {
-        return createToken(userId, email, jwtExpiration);
+        return createToken(userId, email, accessTokenExpiration);
     }
 
     public String generateRefreshToken(Long userId, String email) {
-        return createToken(userId, email, REFRESH_EXPIRATION_MS);
+        return createToken(userId, email, refreshTokenExpiration);
     }
 
     public String generateAccessToken(User user) {
@@ -45,6 +56,12 @@ public class JwtProvider {
                     .verifyWith(getSigningKey())
                     .build()
                     .parseSignedClaims(token);
+
+            if (isTokenBlacklisted(token)) {
+                log.warn("JWT token is blacklisted");
+                return false;
+            }
+
             return true;
         } catch (ExpiredJwtException e) {
             log.warn("JWT token expired: {}", e.getMessage());
@@ -58,6 +75,30 @@ public class JwtProvider {
             log.warn("JWT claims empty: {}", e.getMessage());
         }
         return false;
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return tokenBlacklistRepository.findByToken(token).isPresent();
+    }
+
+    public void addToBlacklist(String token) {
+        try {
+            Claims claims = parseClaims(token);
+            LocalDateTime expiresAt = claims.getExpiration()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+
+            TokenBlacklist blacklistedToken = TokenBlacklist.builder()
+                    .token(token)
+                    .expiresAt(expiresAt)
+                    .build();
+
+            tokenBlacklistRepository.save(blacklistedToken);
+            log.debug("Token added to blacklist, expires at: {}", expiresAt);
+        } catch (Exception e) {
+            log.error("Failed to blacklist token: {}", e.getMessage());
+        }
     }
 
     public Claims extractClaims(String token) {
