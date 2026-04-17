@@ -2,6 +2,7 @@ package com.taskhub.service;
 
 import com.taskhub.dto.*;
 import com.taskhub.entity.Tag;
+import com.taskhub.security.SecurityUtil;
 import com.taskhub.entity.Task;
 import com.taskhub.entity.Task.Priority;
 import com.taskhub.entity.User;
@@ -43,9 +44,12 @@ public class TaskService {
                     .orElseThrow(() -> new IllegalArgumentException("Category not found"));
         }
 
+        String safeTitle       = SecurityUtil.sanitizeHtml(req.getTitle());
+        String safeDescription = SecurityUtil.sanitizeHtml(req.getDescription());
+
         Task task = Task.builder()
-                .title(req.getTitle())
-                .description(req.getDescription())
+                .title(safeTitle)
+                .description(safeDescription)
                 .priority(parsePriority(req.getPriority()))
                 .categoryId(req.getCategoryId())
                 .userId(userId)

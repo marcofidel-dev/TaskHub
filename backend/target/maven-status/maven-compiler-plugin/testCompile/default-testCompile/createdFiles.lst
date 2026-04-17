@@ -1,4 +1,11 @@
-com/taskhub/service/CategoryServiceTest.class
 com/taskhub/AppTest.class
+com/taskhub/validation/InputValidationTest.class
+com/taskhub/security/SecurityUtilTest.class
+com/taskhub/service/CategoryServiceTest.class
+com/taskhub/controller/AuthControllerTest.class
 com/taskhub/controller/TaskControllerTest.class
 com/taskhub/service/TaskServiceTest.class
+com/taskhub/interceptor/RateLimitInterceptorTest.class
+com/taskhub/security/JwtProviderTest.class
+com/taskhub/controller/AuthControllerRefreshTest.class
+com/taskhub/security/SecurityHeadersTest.class

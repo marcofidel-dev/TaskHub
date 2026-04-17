@@ -1,4 +1,11 @@
-/home/TaskHub/backend/src/test/java/com/taskhub/controller/TaskControllerTest.java
-/home/TaskHub/backend/src/test/java/com/taskhub/AppTest.java
-/home/TaskHub/backend/src/test/java/com/taskhub/service/CategoryServiceTest.java
-/home/TaskHub/backend/src/test/java/com/taskhub/service/TaskServiceTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/controller/AuthControllerTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/service/CategoryServiceTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/security/SecurityUtilTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/interceptor/RateLimitInterceptorTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/security/JwtProviderTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/validation/InputValidationTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/controller/TaskControllerTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/service/TaskServiceTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/security/SecurityHeadersTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/AppTest.java
+/home/marco/taskhub/backend/src/test/java/com/taskhub/controller/AuthControllerRefreshTest.java

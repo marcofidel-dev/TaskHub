@@ -157,9 +157,17 @@ public class AuthController {
                 );
             }
             
+            // Rotate: blacklist consumed refresh token, issue a new pair
+            jwtProvider.addToBlacklist(refreshToken);
+
             String newAccessToken = jwtProvider.generateAccessToken(userId, email);
-            log.debug("Token refreshed for userId: {}", userId);
-            return ResponseEntity.ok(Map.of("accessToken", newAccessToken));
+            String newRefreshToken = jwtProvider.generateRefreshToken(userId, email);
+
+            log.debug("Tokens rotated for userId: {}", userId);
+            return ResponseEntity.ok(Map.of(
+                    "accessToken", newAccessToken,
+                    "refreshToken", newRefreshToken
+            ));
 
         } catch (Exception e) {
             log.error("Token refresh error: {}", e.getMessage(), e);

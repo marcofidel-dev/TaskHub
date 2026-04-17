@@ -50,8 +50,8 @@ public class TaskController {
 
             if (userId == null) {
                 return ResponseEntity.status(401)
-                        .body(new ApiErrorResponse(401, "UNAUTHORIZED", "Valid JWT token required",
-                                LocalDateTime.now(), null));
+                        .body(ApiErrorResponse.builder().status(401).error("UNAUTHORIZED")
+                                        .message("Valid JWT token required").timestamp(LocalDateTime.now()).build());
             }
 
             if (req.getCategoryId() != null && req.getCategoryId() <= 0) {
@@ -61,14 +61,14 @@ public class TaskController {
             Task task = taskService.createTask(userId, req);
             return ResponseEntity.status(HttpStatus.CREATED).body(taskService.mapToResponse(task));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400)
-                    .body(new ApiErrorResponse(400, "VALIDATION_ERROR", e.getMessage(),
-                            LocalDateTime.now(), null));
+            return ResponseEntity.status(400).body(
+                    ApiErrorResponse.builder().status(400).error("VALIDATION_ERROR")
+                            .message(e.getMessage()).timestamp(LocalDateTime.now()).build());
         } catch (Exception e) {
             log.error("Error creating task", e);
-            return ResponseEntity.status(500)
-                    .body(new ApiErrorResponse(500, "SERVER_ERROR", "Failed to create task",
-                            LocalDateTime.now(), null));
+            return ResponseEntity.status(500).body(
+                    ApiErrorResponse.builder().status(500).error("SERVER_ERROR")
+                            .message("Failed to create task").timestamp(LocalDateTime.now()).build());
         }
     }
 
@@ -132,14 +132,14 @@ public class TaskController {
             Task completed = taskService.completeTask(id, userId);
             return ResponseEntity.ok(taskService.mapToResponse(completed));
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(404)
-                    .body(new ApiErrorResponse(404, "NOT_FOUND", e.getMessage(),
-                            LocalDateTime.now(), null));
+            return ResponseEntity.status(404).body(
+                    ApiErrorResponse.builder().status(404).error("NOT_FOUND")
+                            .message(e.getMessage()).timestamp(LocalDateTime.now()).build());
         } catch (Exception e) {
             log.error("Error toggling task completion: taskId={} userId={}", id, userId, e);
-            return ResponseEntity.status(500)
-                    .body(new ApiErrorResponse(500, "SERVER_ERROR",
-                            "Failed to update task completion", LocalDateTime.now(), null));
+            return ResponseEntity.status(500).body(
+                    ApiErrorResponse.builder().status(500).error("SERVER_ERROR")
+                            .message("Failed to update task completion").timestamp(LocalDateTime.now()).build());
         }
     }
 
@@ -152,9 +152,9 @@ public class TaskController {
         try {
             if (userId == null) {
                 return ResponseEntity.status(401)
-                        .body(new ApiErrorResponse(401, "UNAUTHORIZED",
-                                "Invalid or missing authentication token",
-                                LocalDateTime.now(), null));
+                        .body(ApiErrorResponse.builder().status(401).error("UNAUTHORIZED")
+                                .message("Invalid or missing authentication token")
+                                .timestamp(LocalDateTime.now()).build());
             }
 
             List<TaskResponseWithDetails> tasks = taskService.filterTasks(userId, filterRequest)
@@ -164,10 +164,9 @@ public class TaskController {
             return ResponseEntity.ok(tasks);
         } catch (Exception e) {
             log.error("Error filtering tasks", e);
-            return ResponseEntity.status(500)
-                    .body(new ApiErrorResponse(500, "SERVER_ERROR",
-                            "Failed to filter tasks",
-                            LocalDateTime.now(), null));
+            return ResponseEntity.status(500).body(
+                    ApiErrorResponse.builder().status(500).error("SERVER_ERROR")
+                            .message("Failed to filter tasks").timestamp(LocalDateTime.now()).build());
         }
     }
 }
