@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Logo from '../components/Logo';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -44,9 +45,7 @@ export default function Home() {
       {/* Nav */}
       <nav className="sticky top-0 z-30 flex items-center justify-between px-6 md:px-10 py-4 bg-white/80 backdrop-blur border-b border-gray-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm text-white" style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}>
-            T
-          </div>
+          <Logo size={28} />
           <span className="text-xl font-bold text-gray-900 tracking-tight">{t('app_name')}</span>
         </div>
         <div className="flex items-center gap-2">
@@ -147,7 +146,7 @@ export default function Home() {
       <footer className="border-t border-gray-100 py-6 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded flex items-center justify-center text-white text-xs font-bold" style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}>T</div>
+            <Logo size={20} />
             <span className="font-semibold text-gray-700 text-sm">{t('app_name')}</span>
           </div>
           <p className="text-gray-400 text-xs">&copy; {new Date().getFullYear()} {t('app_name')}. {t('footer_rights')}</p>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
+import Logo from '../Logo';
 
 export default function LoginPage() {
   const { login, loading, error } = useAuth();
@@ -10,6 +11,7 @@ export default function LoginPage() {
 
   const [form, setForm] = useState({ email: '', password: '' });
   const [validationErrors, setValidationErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const validate = () => {
     const errs = {};
@@ -43,9 +45,7 @@ export default function LoginPage() {
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
           {/* Logo */}
           <div className="flex items-center gap-2.5 mb-8">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-white text-sm shadow-sm" style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}>
-              T
-            </div>
+            <Logo size={32} />
             <span className="text-xl font-bold text-gray-900 tracking-tight">{t('common:app_name')}</span>
           </div>
 
@@ -95,19 +95,40 @@ export default function LoginPage() {
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                 {t('auth:password')}
               </label>
-              <input
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder={t('auth:password_placeholder')}
-                autoComplete="current-password"
-                className={`w-full px-4 py-3 border rounded-xl text-gray-900 placeholder-gray-400 text-sm transition-all duration-200 outline-none focus:ring-2 focus:border-transparent ${
-                  validationErrors.password
-                    ? 'border-red-400 focus:ring-red-200'
-                    : 'border-gray-200 focus:ring-indigo-200 focus:border-indigo-400'
-                }`}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder={t('auth:password_placeholder')}
+                  autoComplete="current-password"
+                  className={`w-full px-4 py-3 pr-11 border rounded-xl text-gray-900 placeholder-gray-400 text-sm transition-all duration-200 outline-none focus:ring-2 focus:border-transparent ${
+                    validationErrors.password
+                      ? 'border-red-400 focus:ring-red-200'
+                      : 'border-gray-200 focus:ring-indigo-200 focus:border-indigo-400'
+                  }`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+                      <line x1="1" y1="1" x2="23" y2="23" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
               {validationErrors.password && (
                 <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
                   <span>⚠</span> {validationErrors.password}
