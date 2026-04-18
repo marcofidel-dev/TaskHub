@@ -246,8 +246,8 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-              {/* Connector line (desktop) */}
-              <div className="hidden md:block absolute top-8 left-[calc(16.67%+16px)] right-[calc(16.67%+16px)] h-px bg-gradient-to-r from-indigo-200 via-violet-200 to-indigo-200" />
+              {/* Connector line (desktop only) — sits at vertical center of the step boxes (h-16/2 = 32px from top of box, box starts at 0) */}
+              <div className="hidden md:block absolute top-8 left-[20%] right-[20%] h-px bg-gradient-to-r from-indigo-200 via-violet-200 to-indigo-200" />
 
               {[
                 { step: '01', key: 'step1', color: '#4F46E5' },

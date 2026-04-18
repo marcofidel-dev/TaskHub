@@ -244,15 +244,18 @@ export default function Dashboard({ user, onLogout }) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 md:gap-4 mb-4">
+      <div className="grid grid-cols-3 gap-2.5 md:gap-4 mb-4">
         {statCards.map(({ label, value, icon, accent, bg, border }) => (
-          <div key={label} className={`bg-white dark:bg-slate-800 rounded-xl border ${border} dark:border-slate-700 p-3 md:p-4 flex flex-col gap-2.5 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-px`}>
-            <div className={`w-8 h-8 md:w-9 md:h-9 ${bg} ${accent} rounded-xl flex items-center justify-center shrink-0`}>
-              {icon}
-            </div>
-            <div>
-              <p className={`text-xl md:text-2xl font-bold ${accent}`}>{value}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 leading-tight">{label}</p>
+          <div key={label} className={`bg-white dark:bg-slate-800 rounded-xl border ${border} dark:border-slate-700 p-2.5 md:p-4 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-px`}>
+            {/* Mobile: icon + value inline; Desktop: stacked */}
+            <div className="flex items-center gap-2 md:flex-col md:items-start md:gap-2.5">
+              <div className={`w-8 h-8 ${bg} ${accent} rounded-lg md:rounded-xl flex items-center justify-center shrink-0`}>
+                {icon}
+              </div>
+              <div className="min-w-0">
+                <p className={`text-lg md:text-2xl font-bold leading-none ${accent}`}>{value}</p>
+                <p className="text-[10px] md:text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 leading-tight">{label}</p>
+              </div>
             </div>
           </div>
         ))}

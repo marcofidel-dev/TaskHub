@@ -53,9 +53,12 @@
   "used_in_other": "Usada en {{count}} tareas",
   "theme": "Tema",
   "dark_mode": "Modo Oscuro",
+  "dark_mode_on": "Activado",
+  "dark_mode_off": "Desactivado",
   "color_palette": "Paleta de Colores",
   "language": "Idioma",
   "reset": "Restablecer",
+  "reset_description": "Restablecer tema e idioma a los valores predeterminados.",
 
   "nav_signin": "Iniciar Sesión",
   "nav_get_started": "Comenzar",

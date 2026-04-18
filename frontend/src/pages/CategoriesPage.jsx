@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
 import CategoryCard from '../components/CategoryCard';
+import ConfirmModal from '../components/ConfirmModal';
 import { categories as categoriesApi } from '../services/api';
 
 const DEFAULT_COLOR = '#6366F1';
@@ -170,6 +171,7 @@ export default function CategoriesPage({ user, onLogout }) {
   const [success, setSuccess] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [editingCategory, setEditingCategory] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState({ open: false, id: null });
 
   const fetchCategories = useCallback(async () => {
     setLoading(true);
@@ -221,8 +223,11 @@ export default function CategoriesPage({ user, onLogout }) {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm(t('categories:delete_confirm'))) return;
+  const handleDeleteRequest = (id) => setConfirmDelete({ open: true, id });
+
+  const handleDeleteConfirm = async () => {
+    const { id } = confirmDelete;
+    setConfirmDelete({ open: false, id: null });
     setError(null);
     try {
       await categoriesApi.delete(id);
@@ -304,7 +309,7 @@ export default function CategoriesPage({ user, onLogout }) {
               key={cat.id}
               category={cat}
               onEdit={(c) => { setEditingCategory(c); setShowForm(false); }}
-              onDelete={handleDelete}
+              onDelete={handleDeleteRequest}
             />
           ))}
         </div>
@@ -332,6 +337,18 @@ export default function CategoriesPage({ user, onLogout }) {
           />
         </Modal>
       )}
+
+      {/* Confirm delete */}
+      <ConfirmModal
+        isOpen={confirmDelete.open}
+        title={t('common:confirm_delete')}
+        message={t('common:delete_confirmation')}
+        confirmLabel={t('common:delete')}
+        cancelLabel={t('common:cancel')}
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => setConfirmDelete({ open: false, id: null })}
+        variant="danger"
+      />
     </Layout>
   );
 }

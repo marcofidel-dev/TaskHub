@@ -280,7 +280,7 @@ export default function TaskCard({ task, onDelete, onTaskUpdate, onEdit, onTagFi
         )}
 
         {/* Row 4: desktop action buttons (revealed on hover) */}
-        <div className="flex items-center gap-1.5 pl-8 h-0 overflow-hidden opacity-0 group-hover:h-auto group-hover:opacity-100 group-hover:mt-0.5 transition-all duration-150 touch-none pointer-events-none group-hover:pointer-events-auto">
+        <div className="flex items-center gap-1.5 pl-8 max-h-0 overflow-hidden opacity-0 group-hover:max-h-12 group-hover:opacity-100 group-hover:mt-0.5 transition-all duration-200 ease-out touch-none pointer-events-none group-hover:pointer-events-auto">
           <button
             onClick={() => onEdit(task)}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-slate-700 rounded-lg hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors"
