@@ -170,8 +170,10 @@ export default function Dashboard({ user, onLogout }) {
     fetchTasks(activeFilters);
   }, [fetchTasks, activeFilters]);
 
-  const completedCount = taskList.filter((task) => task.completed).length;
-  const pendingCount   = taskList.filter((task) => !task.completed).length;
+  const completedCount  = taskList.filter((task) => task.completed).length;
+  const pendingCount    = taskList.filter((task) => !task.completed).length;
+  const progressPercent = taskList.length > 0 ? Math.round((completedCount / taskList.length) * 100) : 0;
+  const hasActiveFilters = Object.keys(activeFilters).length > 0;
 
   const hour = new Date().getHours();
   const greeting = hour < 12
@@ -242,19 +244,49 @@ export default function Dashboard({ user, onLogout }) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-3 gap-2.5 md:gap-4 mb-4">
         {statCards.map(({ label, value, icon, accent, bg, border }) => (
-          <div key={label} className={`bg-white dark:bg-slate-800 rounded-xl border ${border} dark:border-slate-700 p-4 flex flex-col gap-3 shadow-sm hover:shadow-md transition-shadow duration-200`}>
-            <div className={`w-9 h-9 ${bg} ${accent} rounded-xl flex items-center justify-center`}>
-              {icon}
-            </div>
-            <div>
-              <p className={`text-2xl font-bold ${accent}`}>{value}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">{label}</p>
+          <div key={label} className={`bg-white dark:bg-slate-800 rounded-xl border ${border} dark:border-slate-700 p-2.5 md:p-4 shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-px`}>
+            {/* Mobile: icon + value inline; Desktop: stacked */}
+            <div className="flex items-center gap-2 md:flex-col md:items-start md:gap-2.5">
+              <div className={`w-8 h-8 ${bg} ${accent} rounded-lg md:rounded-xl flex items-center justify-center shrink-0`}>
+                {icon}
+              </div>
+              <div className="min-w-0">
+                <p className={`text-lg md:text-2xl font-bold leading-none ${accent}`}>{value}</p>
+                <p className="text-[10px] md:text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 leading-tight">{label}</p>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Progress bar */}
+      {taskList.length > 0 && (
+        <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 px-4 py-3 mb-5 shadow-sm">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">{t('tasks:progress_label')}</span>
+            <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{progressPercent}%</span>
+          </div>
+          <div className="w-full h-2 bg-gray-100 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all duration-500 ease-out"
+              style={{
+                width: `${progressPercent}%`,
+                background: progressPercent === 100
+                  ? 'linear-gradient(90deg, #10B981, #059669)'
+                  : 'linear-gradient(90deg, #4F46E5, #7C3AED)',
+              }}
+            />
+          </div>
+          {progressPercent === 100 && (
+            <p className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-1.5 flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+              {t('tasks:all_caught_up')}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Filters */}
       <div className="mb-5">
@@ -266,9 +298,21 @@ export default function Dashboard({ user, onLogout }) {
         />
       </div>
 
+      {/* Section header */}
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+          {t('tasks:my_tasks')}
+        </h2>
+        {!loadingTasks && taskList.length > 0 && (
+          <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
+            {taskList.length} {taskList.length === 1 ? t('common:task_count_one', { count: taskList.length }) : t('common:task_count_other', { count: taskList.length })}
+          </span>
+        )}
+      </div>
+
       {/* Task list */}
       {loadingTasks ? (
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
         </div>
       ) : (
@@ -278,6 +322,8 @@ export default function Dashboard({ user, onLogout }) {
           onTaskUpdate={handleTaskUpdate}
           onEdit={(task) => { setEditingTask(task); setShowForm(false); }}
           onTagFilter={handleTagFilter}
+          hasFilters={hasActiveFilters}
+          onClearFilters={() => { handleFilter({}); }}
         />
       )}
 

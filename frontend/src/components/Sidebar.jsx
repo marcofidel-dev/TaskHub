@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 import { useThemeStore } from '../store/themeStore';
+import Logo from './Logo';
 
 export default function Sidebar({ user, onLogout, open, onClose }) {
   const navigate = useNavigate();
@@ -83,9 +84,7 @@ export default function Sidebar({ user, onLogout, open, onClose }) {
         {/* Logo + close button */}
         <div className="flex items-center justify-between px-5 py-5 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm text-white shadow-lg" style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
-              T
-            </div>
+            <Logo size={28} />
             <span className="font-bold text-lg text-white tracking-tight">{t('app_name')}</span>
           </div>
           <button
@@ -130,7 +129,7 @@ export default function Sidebar({ user, onLogout, open, onClose }) {
                 `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
                   isActive
                     ? 'bg-indigo-600 text-white shadow-md shadow-indigo-900/50'
-                    : 'text-slate-400 hover:bg-white/8 hover:text-white'
+                    : 'text-slate-400 hover:bg-white/[0.08] hover:text-white'
                 }`
               }
             >

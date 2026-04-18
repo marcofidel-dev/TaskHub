@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './hooks/useAuth';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -21,11 +21,10 @@ function ProtectedRoute({ children, isAuthenticated, loading }) {
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
 
-export default function App() {
+function AppRoutes() {
   const { user, isAuthenticated, loading, logout } = useAuth();
 
   return (
-    <ToastProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -66,6 +65,15 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
+  );
+}
+
+export default function App() {
+  return (
+    <ToastProvider>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </ToastProvider>
   );
 }

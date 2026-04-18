@@ -23,7 +23,7 @@ export default function SettingsPage({ user, onLogout }) {
             <div>
               <p className="text-sm font-medium text-gray-800 dark:text-gray-200">{t('dark_mode')}</p>
               <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
-                {isDarkMode ? '🌙' : '☀️'} {isDarkMode ? 'Activado' : 'Desactivado'}
+                {isDarkMode ? '🌙' : '☀️'} {isDarkMode ? t('dark_mode_on') : t('dark_mode_off')}
               </p>
             </div>
             <button
@@ -80,7 +80,7 @@ export default function SettingsPage({ user, onLogout }) {
         <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-6 shadow-sm">
           <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">{t('reset')}</h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-            Restablecer tema e idioma a los valores predeterminados.
+            {t('reset_description')}
           </p>
           <button
             onClick={resetTheme}
