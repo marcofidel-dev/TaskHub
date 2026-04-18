@@ -21,54 +21,59 @@ function ProtectedRoute({ children, isAuthenticated, loading }) {
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
 
-export default function App() {
+function AppRoutes() {
   const { user, isAuthenticated, loading, logout } = useAuth();
 
   return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
+              <Dashboard user={user} onLogout={logout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/categories"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
+              <CategoriesPage user={user} onLogout={logout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/tags"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
+              <TagsPage user={user} onLogout={logout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/settings"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
+              <SettingsPage user={user} onLogout={logout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default function App() {
+  return (
     <ToastProvider>
       <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
-                  <Dashboard user={user} onLogout={logout} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard/categories"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
-                  <CategoriesPage user={user} onLogout={logout} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard/tags"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
-                  <TagsPage user={user} onLogout={logout} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard/settings"
-              element={
-                <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
-                  <SettingsPage user={user} onLogout={logout} />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
+        <AppRoutes />
       </AuthProvider>
     </ToastProvider>
-  );
   );
 }
