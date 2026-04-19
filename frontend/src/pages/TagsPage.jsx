@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
 import TagCard from '../components/TagCard';
+import ConfirmModal from '../components/ConfirmModal';
 import { tags as tagsApi } from '../services/api';
 
 const DEFAULT_COLOR = '#6366F1';
@@ -148,6 +149,7 @@ export default function TagsPage({ user, onLogout }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState({ open: false, id: null });
 
   const fetchTags = useCallback(async () => {
     setLoading(true);
@@ -184,8 +186,11 @@ export default function TagsPage({ user, onLogout }) {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm(t('tags:delete_confirm'))) return;
+  const handleDeleteRequest = (id) => setConfirmDelete({ open: true, id });
+
+  const handleDeleteConfirm = async () => {
+    const { id } = confirmDelete;
+    setConfirmDelete({ open: false, id: null });
     setError(null);
     try {
       await tagsApi.delete(id);
@@ -261,7 +266,7 @@ export default function TagsPage({ user, onLogout }) {
             <TagCard
               key={tag.id}
               tag={tag}
-              onDelete={handleDelete}
+              onDelete={handleDeleteRequest}
             />
           ))}
         </div>
@@ -277,6 +282,18 @@ export default function TagsPage({ user, onLogout }) {
           />
         </Modal>
       )}
+
+      {/* Confirm delete */}
+      <ConfirmModal
+        isOpen={confirmDelete.open}
+        title={t('common:confirm_delete')}
+        message={t('common:delete_confirmation')}
+        confirmLabel={t('common:delete')}
+        cancelLabel={t('common:cancel')}
+        onConfirm={handleDeleteConfirm}
+        onCancel={() => setConfirmDelete({ open: false, id: null })}
+        variant="danger"
+      />
     </Layout>
   );
 }

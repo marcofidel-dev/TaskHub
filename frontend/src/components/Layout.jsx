@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Sidebar from './Sidebar';
+import Logo from './Logo';
 import { useThemeStore } from '../store/themeStore';
 
 export default function Layout({ children, user, onLogout }) {
@@ -30,9 +31,7 @@ export default function Layout({ children, user, onLogout }) {
             </svg>
           </button>
           <div className="flex items-center gap-2 flex-1">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs text-white" style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}>
-              T
-            </div>
+            <Logo size={24} />
             <span className="font-bold text-gray-900 dark:text-white tracking-tight">TaskHub</span>
           </div>
           <button
