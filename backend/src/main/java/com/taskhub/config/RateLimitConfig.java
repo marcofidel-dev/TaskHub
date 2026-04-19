@@ -13,7 +13,7 @@ import java.time.Duration;
  * Each method is a factory that creates a fresh Bucket for a given IP.
  * Limits:
  *   login    → 5 attempts  / 15 minutes
- *   register → 3 attempts  / 1 hour
+ *   register → 10 attempts  / 1 hour
  *   general  → 100 requests / 1 minute
  */
 @Configuration
@@ -26,10 +26,10 @@ public class RateLimitConfig {
         return Bucket.builder().addLimit(limit).build();
     }
 
-    /** 3 register attempts per hour per IP. */
+    /** 10 register attempts per hour per IP. */
     public Bucket newRegisterBucket() {
-        Bandwidth limit = Bandwidth.classic(3,
-                Refill.intervally(3, Duration.ofHours(1)));
+        Bandwidth limit = Bandwidth.classic(10,
+                Refill.intervally(10, Duration.ofHours(1)));
         return Bucket.builder().addLimit(limit).build();
     }
 
