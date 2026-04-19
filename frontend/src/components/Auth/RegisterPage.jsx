@@ -57,26 +57,26 @@ function FieldError({ msg }) {
 
 /* ── Password strength bar ───────────────────────────── */
 const PW_CHECKS = [
-  { key: 'len',      label: 'auth:pw_check_length',    test: (p) => p.length >= 8 },
-  { key: 'upper',    label: 'auth:pw_check_upper',     test: (p) => /[A-Z]/.test(p) },
-  { key: 'lower',    label: 'auth:pw_check_lower',     test: (p) => /[a-z]/.test(p) },
-  { key: 'number',   label: 'auth:pw_check_number',    test: (p) => /\d/.test(p) },
-  { key: 'special',  label: 'auth:pw_check_special',   test: (p) => /[@$!%*?&]/.test(p) },
+  { key: 'len', label: 'auth:pw_check_length', test: (p) => p.length >= 8 },
+  { key: 'upper', label: 'auth:pw_check_upper', test: (p) => /[A-Z]/.test(p) },
+  { key: 'lower', label: 'auth:pw_check_lower', test: (p) => /[a-z]/.test(p) },
+  { key: 'number', label: 'auth:pw_check_number', test: (p) => /\d/.test(p) },
+  { key: 'special', label: 'auth:pw_check_special', test: (p) => /[@$!%*?&]/.test(p) },
 ];
 
 const STRENGTH_CONFIG = [
-  { label: 'auth:strength_weak',    color: '#EF4444', barColor: 'bg-red-500' },
-  { label: 'auth:strength_fair',    color: '#F59E0B', barColor: 'bg-amber-500' },
-  { label: 'auth:strength_good',    color: '#3B82F6', barColor: 'bg-blue-500' },
-  { label: 'auth:strength_strong',  color: '#10B981', barColor: 'bg-emerald-500' },
-  { label: 'auth:strength_strong',  color: '#10B981', barColor: 'bg-emerald-500' },
+  { label: 'auth:strength_weak', color: '#EF4444', barColor: 'bg-red-500' },
+  { label: 'auth:strength_fair', color: '#F59E0B', barColor: 'bg-amber-500' },
+  { label: 'auth:strength_good', color: '#3B82F6', barColor: 'bg-blue-500' },
+  { label: 'auth:strength_strong', color: '#10B981', barColor: 'bg-emerald-500' },
+  { label: 'auth:strength_strong', color: '#10B981', barColor: 'bg-emerald-500' },
 ];
 
 function PasswordStrength({ password, t }) {
   if (!password) return null;
-  const passed  = PW_CHECKS.filter(({ test }) => test(password)).length;
-  const config  = STRENGTH_CONFIG[Math.max(0, passed - 1)];
-  const pct     = (passed / PW_CHECKS.length) * 100;
+  const passed = PW_CHECKS.filter(({ test }) => test(password)).length;
+  const config = STRENGTH_CONFIG[Math.max(0, passed - 1)];
+  const pct = (passed / PW_CHECKS.length) * 100;
 
   return (
     <div className="mt-3 space-y-3 animate-fadeIn">
@@ -161,23 +161,23 @@ function BrandPanel() {
 /* ── Register Page ───────────────────────────────────── */
 export default function RegisterPage() {
   const { register, loading, error, clearError } = useAuth();
-  const navigate                                  = useNavigate();
-  const { t }                                     = useTranslation(['auth', 'common']);
+  const navigate = useNavigate();
+  const { t } = useTranslation(['auth', 'common']);
 
   useEffect(() => { clearError(); }, [clearError]);
 
-  const [form, setForm]           = useState({ email: '', username: '', password: '', confirmPassword: '' });
-  const [touched, setTouched]     = useState({});
+  const [form, setForm] = useState({ email: '', username: '', password: '', confirmPassword: '' });
+  const [touched, setTouched] = useState({});
   const [validationErrors, setVE] = useState({});
-  const [showPw, setShowPw]       = useState(false);
-  const [showCfm, setShowCfm]     = useState(false);
+  const [showPw, setShowPw] = useState(false);
+  const [showCfm, setShowCfm] = useState(false);
   const [termsAccepted, setTerms] = useState(false);
   const [termsError, setTermsErr] = useState(false);
 
   const validators = {
-    email:           (v) => !v.trim() ? t('auth:email_required') : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? t('auth:email_invalid') : '',
-    username:        (v) => !v.trim() ? t('auth:username_required') : (v.length < 3 || v.length > 30) ? t('auth:username_length') : '',
-    password:        (v) => !v ? t('auth:password_required') : v.length < 8 ? t('auth:password_min_length') : !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(v) ? t('auth:password_complexity') : '',
+    email: (v) => !v.trim() ? t('auth:email_required') : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? t('auth:email_invalid') : '',
+    username: (v) => !v.trim() ? t('auth:username_required') : (v.length < 3 || v.length > 30) ? t('auth:username_length') : '',
+    password: (v) => !v ? t('auth:password_required') : v.length < 8 ? t('auth:password_min_length') : !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(v) ? t('auth:password_complexity') : '',
     confirmPassword: (v) => v !== form.password ? t('auth:passwords_dont_match') : '',
   };
 
@@ -322,24 +322,23 @@ export default function RegisterPage() {
 
             {/* Terms */}
             <div>
-              <label className="flex items-start gap-3 cursor-pointer select-none">
+              <label className="flex gap-2.5 items-start cursor-pointer">
                 <div
-                  className={`mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all duration-150 ${termsAccepted ? 'border-indigo-600 bg-indigo-600' : termsError ? 'border-red-400' : 'border-gray-300 bg-white'}`}
+                  className={`mt-0.5 w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all duration-150 cursor-pointer ${termsAccepted ? 'border-indigo-600 bg-indigo-600' : termsError ? 'border-red-400' : 'border-gray-300 bg-white'}`}
                   onClick={() => { setTerms((v) => !v); setTermsErr(false); }}
                 >
                   {termsAccepted && (
-                    <svg width="9" height="9" viewBox="0 0 10 8" fill="none">
-                      <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   )}
                 </div>
-                <input type="checkbox" checked={termsAccepted} onChange={(e) => { setTerms(e.target.checked); setTermsErr(false); }} className="sr-only" />
-                <span className="text-sm text-gray-600 leading-relaxed">{t('auth:terms_accept')}</span>
+                <span className="text-sm text-gray-600 leading-relaxed cursor-pointer">{t('auth:terms_accept')}</span>
               </label>
               {termsError && (
-                <p className="flex items-center gap-1.5 text-red-500 text-xs mt-1.5 animate-fadeIn">
+                <div className="mt-1.5 flex gap-1.5 text-xs text-red-600 font-medium">
                   <AlertIcon /> {t('auth:terms_required')}
-                </p>
+                </div>
               )}
             </div>
 
