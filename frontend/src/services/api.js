@@ -63,4 +63,12 @@ export const tags = {
   delete: (id) => api.delete(`/v1/tags/${id}`),
 };
 
+export const subscriptions = {
+  current: () => api.get('/v1/subscriptions/current'),
+  upgrade: (plan, wompiTransactionId) =>
+    api.post('/v1/subscriptions/upgrade', { plan, wompiTransactionId }),
+  cancel: () => api.post('/v1/subscriptions/cancel'),
+  transactions: () => api.get('/v1/subscriptions/transactions'),
+};
+
 export default api;
