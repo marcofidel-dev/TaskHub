@@ -1,4 +1,5 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/SubscriptionTransaction.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TimeEntryRequest.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/SubscriptionTransactionRepository.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TaskFilterRequest.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/UserResponse.java
@@ -25,15 +26,18 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/CurrentPlanResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/Tag.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/interceptor/RateLimitInterceptor.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TimeEntryResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/PlanUpgradeRequest.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/TagController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/security/CurrentUserArgumentResolver.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/entity/TaskTimeEntry.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/SubscriptionController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/TagService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/GlobalExceptionHandler.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/CategoryService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/ErrorResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/FeatureAccess.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TaskTimeTrackingResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/UserPlan.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/TaskRepository.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TaskCreateRequest.java
@@ -50,8 +54,11 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/TaskService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/LoginRequest.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/RegisterRequest.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/repository/TaskTimeEntryRepository.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/CategoryResponse.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/controller/TimeTrackingController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/security/CurrentUser.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/User.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/service/TimeTrackingService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/config/WebMvcConfig.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/Task.java
