@@ -24,8 +24,13 @@ public interface TaskTimeEntryRepository extends JpaRepository<TaskTimeEntry, Lo
     @Query("SELECT t FROM TaskTimeEntry t WHERE t.userId = ?1 AND t.entryDate BETWEEN ?2 AND ?3")
     List<TaskTimeEntry> findByUserIdAndDateRange(Long userId, LocalDate startDate, LocalDate endDate);
 
+    long countByUserId(Long userId);
+
     @Query("SELECT COALESCE(SUM(t.hours), 0) FROM TaskTimeEntry t WHERE t.taskId = ?1")
     BigDecimal getTotalHoursByTask(Long taskId);
+
+    @Query("SELECT COALESCE(SUM(t.hours), 0) FROM TaskTimeEntry t WHERE t.userId = ?1")
+    BigDecimal getTotalHoursByUserId(Long userId);
 
     @Query("SELECT COALESCE(SUM(t.hours), 0) FROM TaskTimeEntry t WHERE t.userId = ?1 AND t.entryDate BETWEEN ?2 AND ?3")
     BigDecimal getTotalHoursByUserAndDateRange(Long userId, LocalDate startDate, LocalDate endDate);
