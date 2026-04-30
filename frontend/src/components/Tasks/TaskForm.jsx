@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TagSelector from '../TagSelector';
 import CategorySelector from '../CategorySelector';
+import { useUserLimits } from '../../hooks/useUserLimits';
+import TaskLimitIndicator from '../PlanLimits/TaskLimitIndicator';
 
 const PRIORITIES = ['low', 'medium', 'high'];
 
@@ -27,6 +29,9 @@ export default function TaskForm({
   tags = [],
 }) {
   const { t } = useTranslation(['tasks', 'common']);
+  const { limits, loading: limitsLoading } = useUserLimits();
+  const isCreating = !initialData;
+  const isTaskLimitReached = isCreating && !limitsLoading && limits?.plan === 'FREE' && limits?.taskCount >= limits?.taskLimit;
 
   const [form, setForm] = useState({
     title: '',
@@ -218,11 +223,14 @@ export default function TaskForm({
         </div>
       )}
 
+      {/* Limit indicator (create mode only) */}
+      {isCreating && <TaskLimitIndicator limits={limits} />}
+
       {/* Buttons */}
       <div className="flex gap-3 pt-1">
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || isTaskLimitReached}
           className="flex-1 py-3 text-white rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}
         >

@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import CategoryCard from '../components/CategoryCard';
 import ConfirmModal from '../components/ConfirmModal';
 import { categories as categoriesApi } from '../services/api';
+import { useUserLimits } from '../hooks/useUserLimits';
+import CategoryLimitIndicator from '../components/PlanLimits/CategoryLimitIndicator';
 
 const DEFAULT_COLOR = '#6366F1';
 
@@ -29,12 +31,14 @@ function Modal({ title, children, onClose }) {
   );
 }
 
-function CategoryForm({ initialData, onSubmit, onCancel, loading }) {
+function CategoryForm({ initialData, onSubmit, onCancel, loading, limits, limitsLoading }) {
   const { t } = useTranslation(['categories', 'common']);
   const [name, setName] = useState(initialData?.name ?? '');
   const [description, setDescription] = useState(initialData?.description ?? '');
   const [color, setColor] = useState(initialData?.color ?? DEFAULT_COLOR);
   const [errors, setErrors] = useState({});
+  const isCreating = !initialData;
+  const isCategoryLimitReached = isCreating && !limitsLoading && limits?.plan === 'FREE' && limits?.categoryCount >= limits?.categoryLimit;
 
   const validate = () => {
     const e = {};
@@ -118,6 +122,9 @@ function CategoryForm({ initialData, onSubmit, onCancel, loading }) {
         </div>
       </div>
 
+      {/* Limit indicator (create mode only) */}
+      {isCreating && <CategoryLimitIndicator limits={limits} />}
+
       {/* Actions */}
       <div className="flex gap-3 pt-2">
         <button
@@ -129,7 +136,7 @@ function CategoryForm({ initialData, onSubmit, onCancel, loading }) {
         </button>
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || isCategoryLimitReached}
           className="flex-1 px-4 py-2.5 text-sm font-semibold text-white rounded-xl transition-all disabled:opacity-60 flex items-center justify-center gap-2"
           style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}
         >
@@ -163,6 +170,7 @@ function EmptyState() {
 
 export default function CategoriesPage({ user, onLogout }) {
   const { t } = useTranslation(['categories', 'common']);
+  const { limits, loading: limitsLoading, refetch: refetchLimits } = useUserLimits();
 
   const [categoryList, setCategoryList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -201,6 +209,7 @@ export default function CategoriesPage({ user, onLogout }) {
       setShowForm(false);
       showSuccess(t('categories:category_created'));
       fetchCategories();
+      refetchLimits();
     } catch (err) {
       setError(err.response?.data?.message || t('categories:failed_to_create'));
     } finally {
@@ -233,6 +242,7 @@ export default function CategoriesPage({ user, onLogout }) {
       await categoriesApi.delete(id);
       setCategoryList((prev) => prev.filter((c) => c.id !== id));
       showSuccess(t('categories:category_deleted'));
+      refetchLimits();
     } catch (err) {
       setError(err.response?.data?.message || t('categories:failed_to_delete'));
     }
@@ -322,6 +332,8 @@ export default function CategoriesPage({ user, onLogout }) {
             onSubmit={handleCreate}
             onCancel={() => setShowForm(false)}
             loading={formLoading}
+            limits={limits}
+            limitsLoading={limitsLoading}
           />
         </Modal>
       )}
@@ -334,6 +346,8 @@ export default function CategoriesPage({ user, onLogout }) {
             onSubmit={handleUpdate}
             onCancel={() => setEditingCategory(null)}
             loading={formLoading}
+            limits={limits}
+            limitsLoading={limitsLoading}
           />
         </Modal>
       )}

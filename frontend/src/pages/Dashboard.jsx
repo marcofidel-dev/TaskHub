@@ -8,8 +8,10 @@ import ConfirmModal from '../components/ConfirmModal';
 import TimeTrackingPanel from '../components/TimeTracking/TimeTrackingPanel';
 import SubtasksPanel from '../components/Subtasks/SubtasksPanel';
 import ExportButtonProtected from '../components/Export/ExportButtonProtected';
+import PlanLimitBanner from '../components/PlanLimits/PlanLimitBanner';
 import { tasks as tasksApi, categories as categoriesApi, tags as tagsApi } from '../services/api';
 import { useToast } from '../context/ToastContext';
+import { useUserLimits } from '../hooks/useUserLimits';
 
 function Modal({ title, children, onClose }) {
   return (
@@ -55,6 +57,7 @@ function SkeletonCard() {
 export default function Dashboard({ user, onLogout }) {
   const { t } = useTranslation(['tasks', 'auth', 'common']);
   const { showToast } = useToast();
+  const { limits, loading: limitsLoading, refetch: refetchLimits } = useUserLimits();
 
   const [taskList, setTaskList]         = useState([]);
   const [categories, setCategories]     = useState([]);
@@ -130,6 +133,7 @@ export default function Dashboard({ user, onLogout }) {
       await tasksApi.create(data);
       setShowForm(false);
       await fetchTasks(activeFilters);
+      refetchLimits();
       showToast('success', t('tasks:task_created'));
     } catch (err) {
       showToast('error', err.response?.data?.message || t('tasks:failed_to_create'));
@@ -164,6 +168,7 @@ export default function Dashboard({ user, onLogout }) {
     try {
       await tasksApi.delete(taskId);
       setTaskList((prev) => prev.filter((task) => task.id !== taskId));
+      refetchLimits();
       showToast('success', t('tasks:task_deleted'));
     } catch (err) {
       showToast('error', err.response?.data?.message || t('tasks:failed_to_delete'));
@@ -267,6 +272,9 @@ export default function Dashboard({ user, onLogout }) {
           </div>
         ))}
       </div>
+
+      {/* Plan limit banner */}
+      <PlanLimitBanner limits={limits} loading={limitsLoading} />
 
       {/* Progress bar */}
       {taskList.length > 0 && (
