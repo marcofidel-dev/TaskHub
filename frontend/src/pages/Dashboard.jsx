@@ -6,6 +6,7 @@ import TaskForm from '../components/Tasks/TaskForm';
 import TaskFilter from '../components/Tasks/TaskFilter';
 import ConfirmModal from '../components/ConfirmModal';
 import TimeTrackingPanel from '../components/TimeTracking/TimeTrackingPanel';
+import SubtasksPanel from '../components/Subtasks/SubtasksPanel';
 import { tasks as tasksApi, categories as categoriesApi, tags as tagsApi } from '../services/api';
 import { useToast } from '../context/ToastContext';
 
@@ -66,6 +67,7 @@ export default function Dashboard({ user, onLogout }) {
 
   const [confirmDelete, setConfirmDelete] = useState({ open: false, taskId: null });
   const [timeTrackingTask, setTimeTrackingTask] = useState(null);
+  const [subtasksTask, setSubtasksTask] = useState(null);
 
   const fetchTasks = useCallback(async (filters = {}) => {
     setLoadingTasks(true);
@@ -324,6 +326,7 @@ export default function Dashboard({ user, onLogout }) {
           onEdit={(task) => { setEditingTask(task); setShowForm(false); }}
           onTagFilter={handleTagFilter}
           onTimeTrack={(task) => setTimeTrackingTask(task)}
+          onSubtasks={(task) => setSubtasksTask(task)}
           hasFilters={hasActiveFilters}
           onClearFilters={() => { handleFilter({}); }}
         />
@@ -353,6 +356,16 @@ export default function Dashboard({ user, onLogout }) {
             categories={categories}
             tags={tagsList}
           />
+        </Modal>
+      )}
+
+      {/* Subtasks modal */}
+      {subtasksTask && (
+        <Modal
+          title={`✓ Subtasks — ${subtasksTask.title}`}
+          onClose={() => setSubtasksTask(null)}
+        >
+          <SubtasksPanel taskId={subtasksTask.id} />
         </Modal>
       )}
 

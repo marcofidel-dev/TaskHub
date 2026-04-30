@@ -43,7 +43,7 @@ const ClockIcon = () => (
   </svg>
 );
 
-export default function TaskCard({ task, onDelete, onTaskUpdate, onEdit, onTagFilter, onTimeTrack }) {
+export default function TaskCard({ task, onDelete, onTaskUpdate, onEdit, onTagFilter, onTimeTrack, onSubtasks }) {
   const { t, i18n } = useTranslation(['tasks', 'common']);
 
   const normalizedPriority = (task.priority ?? '').toLowerCase();
@@ -318,6 +318,16 @@ export default function TaskCard({ task, onDelete, onTaskUpdate, onEdit, onTagFi
               aria-label="Track time"
             >
               <ClockIcon /> Time
+            </button>
+          )}
+
+          {onSubtasks && (
+            <button
+              onClick={() => onSubtasks(task)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-purple-600 bg-purple-50 dark:bg-purple-900/30 dark:text-purple-400 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
+              aria-label="Manage subtasks"
+            >
+              ✓ Subtasks
             </button>
           )}
         </div>
