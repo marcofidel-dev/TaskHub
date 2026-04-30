@@ -1,6 +1,8 @@
 package com.taskhub.controller;
 
 import com.taskhub.dto.ApiErrorResponse;
+import com.taskhub.dto.PlanLimitExceededResponse;
+import com.taskhub.exception.PlanLimitExceededException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -73,6 +75,30 @@ public class GlobalExceptionHandler {
                         .timestamp(LocalDateTime.now())
                         .path(request.getRequestURI())
                         .build()
+        );
+    }
+
+    @ExceptionHandler(PlanLimitExceededException.class)
+    public ResponseEntity<PlanLimitExceededResponse> handlePlanLimitExceeded(
+            PlanLimitExceededException ex, HttpServletRequest request) {
+
+        log.warn("Plan limit exceeded [{}]: {}", request.getRequestURI(), ex.getMessage());
+
+        double percentageUsed = (double) ex.getCurrent() * 100 / ex.getLimit();
+
+        return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).body(
+            PlanLimitExceededResponse.builder()
+                .error("PLAN_LIMIT_EXCEEDED")
+                .message(String.format(
+                    "You have reached your limit of %d %s in the %s plan. Upgrade to %s for unlimited.",
+                    ex.getLimit(), ex.getLimitType().toLowerCase(), ex.getPlan(), ex.getUpgradeTo()))
+                .current(ex.getCurrent())
+                .limit(ex.getLimit())
+                .plan(ex.getPlan())
+                .upgradeTo(ex.getUpgradeTo())
+                .upgradeUrl("/pricing")
+                .percentageUsed(percentageUsed)
+                .build()
         );
     }
 

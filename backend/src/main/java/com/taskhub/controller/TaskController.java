@@ -7,8 +7,10 @@ import com.taskhub.dto.TaskResponse;
 import com.taskhub.dto.TaskResponseWithDetails;
 import com.taskhub.dto.TaskUpdateRequest;
 import com.taskhub.entity.Task;
+import com.taskhub.exception.PlanLimitExceededException;
 import com.taskhub.security.CurrentUser;
 import com.taskhub.security.JwtProvider;
+import com.taskhub.service.PlanLimitService;
 import com.taskhub.service.TaskService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -29,6 +31,7 @@ public class TaskController {
 
     private final TaskService taskService;
     private final JwtProvider jwtProvider;
+    private final PlanLimitService planLimitService;
 
     // POST /api/v1/tasks/create
     @PostMapping("/create")
@@ -54,12 +57,16 @@ public class TaskController {
                                         .message("Valid JWT token required").timestamp(LocalDateTime.now()).build());
             }
 
+            planLimitService.validateTaskLimit(userId);
+
             if (req.getCategoryId() != null && req.getCategoryId() <= 0) {
                 req.setCategoryId(null);
             }
 
             Task task = taskService.createTask(userId, req);
             return ResponseEntity.status(HttpStatus.CREATED).body(taskService.mapToResponse(task));
+        } catch (PlanLimitExceededException e) {
+            throw e; // bubble up to GlobalExceptionHandler → 402
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(
                     ApiErrorResponse.builder().status(400).error("VALIDATION_ERROR")

@@ -5,6 +5,7 @@ import com.taskhub.dto.CategoryResponse;
 import com.taskhub.dto.ErrorResponse;
 import com.taskhub.security.CurrentUser;
 import com.taskhub.service.CategoryService;
+import com.taskhub.service.PlanLimitService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final PlanLimitService planLimitService;
 
     @PostMapping
     public ResponseEntity<?> createCategory(
@@ -29,6 +31,7 @@ public class CategoryController {
             @Valid @RequestBody CategoryCreateRequest req
     ) {
         try {
+            planLimitService.validateCategoryLimit(userId);
             var category = categoryService.createCategory(userId, req);
             return ResponseEntity.status(201).body(categoryService.mapToResponse(category));
         } catch (IllegalArgumentException e) {

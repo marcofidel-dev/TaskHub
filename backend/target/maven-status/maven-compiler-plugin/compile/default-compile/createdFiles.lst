@@ -11,6 +11,7 @@ com/taskhub/entity/Category$CategoryBuilder.class
 com/taskhub/dto/CompletionMetricsResponse$CompletionMetricsResponseBuilder.class
 com/taskhub/dto/CategoryProductivityResponse$CategoryProductivityResponseBuilder.class
 com/taskhub/entity/Subtask.class
+com/taskhub/dto/UserLimitsResponse$UserLimitsResponseBuilder.class
 com/taskhub/entity/Task.class
 com/taskhub/entity/FeatureAccess$FeatureAccessBuilder.class
 com/taskhub/dto/PlanUpgradeRequest$PlanUpgradeRequestBuilder.class
@@ -32,11 +33,13 @@ com/taskhub/dto/CurrentPlanResponse$CurrentPlanResponseBuilder.class
 com/taskhub/dto/TaskResponseWithDetails$TaskResponseWithDetailsBuilder.class
 com/taskhub/dto/CategoryCreateRequest$CategoryCreateRequestBuilder.class
 com/taskhub/dto/TaskResponse.class
+com/taskhub/dto/PlanLimitExceededResponse.class
 com/taskhub/config/RateLimitConfig.class
 com/taskhub/dto/UserResponse$UserResponseBuilder.class
 com/taskhub/service/SubtaskStats.class
 com/taskhub/service/TimeTrackingService.class
 com/taskhub/dto/DateRangeAnalyticsResponse$DateRangeAnalyticsResponseBuilder.class
+com/taskhub/exception/PlanLimitExceededException.class
 com/taskhub/controller/TimeTrackingController.class
 com/taskhub/config/LocalDateTimeDeserializer.class
 com/taskhub/dto/ImportTasksResponse$ImportTasksResponseBuilder.class
@@ -69,6 +72,7 @@ com/taskhub/entity/Subtask$SubtaskBuilder.class
 com/taskhub/dto/TimeTrackingAnalyticsResponse$TimeByDay.class
 com/taskhub/repository/CategoryRepository.class
 com/taskhub/entity/User.class
+com/taskhub/service/PlanLimitService.class
 com/taskhub/service/ExportService.class
 com/taskhub/entity/TaskTimeEntry$TaskTimeEntryBuilder.class
 com/taskhub/dto/TaskTimeTrackingResponse.class
@@ -110,6 +114,7 @@ com/taskhub/dto/CompletionMetricsResponse$CompletionByPriority$CompletionByPrior
 com/taskhub/security/SecurityUtil.class
 com/taskhub/dto/ImportTasksResponse.class
 com/taskhub/dto/CategoryProductivityResponse.class
+com/taskhub/dto/UserLimitsResponse.class
 com/taskhub/dto/PlanUpgradeResponse.class
 com/taskhub/dto/DateRangeAnalyticsResponse$DailyMetrics$DailyMetricsBuilder.class
 com/taskhub/dto/ErrorResponse.class
@@ -123,11 +128,13 @@ com/taskhub/service/FeatureAccessService.class
 com/taskhub/dto/SubtaskRequest$SubtaskRequestBuilder.class
 com/taskhub/dto/CategoryProductivityResponse$CategoryMetrics.class
 com/taskhub/controller/SubscriptionController.class
+com/taskhub/controller/UserLimitsController.class
 com/taskhub/repository/TaskTimeEntryRepository.class
 com/taskhub/dto/RegisterRequest.class
 com/taskhub/security/CurrentUser.class
 com/taskhub/dto/AnalyticsDashboardResponse.class
 com/taskhub/config/WebMvcConfig.class
+com/taskhub/dto/PlanLimitExceededResponse$PlanLimitExceededResponseBuilder.class
 com/taskhub/entity/User$SubscriptionTier.class
 com/taskhub/dto/TimeEntryRequest.class
 com/taskhub/controller/AnalyticsController.class
