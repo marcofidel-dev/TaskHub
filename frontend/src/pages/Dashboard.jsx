@@ -7,6 +7,7 @@ import TaskFilter from '../components/Tasks/TaskFilter';
 import ConfirmModal from '../components/ConfirmModal';
 import TimeTrackingPanel from '../components/TimeTracking/TimeTrackingPanel';
 import SubtasksPanel from '../components/Subtasks/SubtasksPanel';
+import ExportButtonProtected from '../components/Export/ExportButtonProtected';
 import { tasks as tasksApi, categories as categoriesApi, tags as tagsApi } from '../services/api';
 import { useToast } from '../context/ToastContext';
 
@@ -234,16 +235,19 @@ export default function Dashboard({ user, onLogout }) {
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">{subtitle}</p>
         </div>
-        <button
-          onClick={() => { setShowForm(true); setEditingTask(null); }}
-          className="flex items-center gap-2 px-4 py-2.5 text-white rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90 hover:shadow-md shadow-sm shrink-0 min-h-[44px]"
-          style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-          <span className="hidden sm:inline">{t('tasks:new_task')}</span>
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <ExportButtonProtected />
+          <button
+            onClick={() => { setShowForm(true); setEditingTask(null); }}
+            className="flex items-center gap-2 px-4 py-2.5 text-white rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90 hover:shadow-md shadow-sm min-h-[44px]"
+            style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)' }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            <span className="hidden sm:inline">{t('tasks:new_task')}</span>
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
