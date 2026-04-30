@@ -37,7 +37,13 @@ const CalendarIcon = () => (
   </svg>
 );
 
-export default function TaskCard({ task, onDelete, onTaskUpdate, onEdit, onTagFilter }) {
+const ClockIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+  </svg>
+);
+
+export default function TaskCard({ task, onDelete, onTaskUpdate, onEdit, onTagFilter, onTimeTrack }) {
   const { t, i18n } = useTranslation(['tasks', 'common']);
 
   const normalizedPriority = (task.priority ?? '').toLowerCase();
@@ -304,6 +310,16 @@ export default function TaskCard({ task, onDelete, onTaskUpdate, onEdit, onTagFi
           >
             <TrashIcon /> {t('common:delete')}
           </button>
+
+          {onTimeTrack && (
+            <button
+              onClick={() => onTimeTrack(task)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 dark:bg-blue-900/30 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+              aria-label="Track time"
+            >
+              <ClockIcon /> Time
+            </button>
+          )}
         </div>
       </div>
     </div>

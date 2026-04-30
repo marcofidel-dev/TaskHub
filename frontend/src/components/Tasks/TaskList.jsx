@@ -47,7 +47,7 @@ function EmptyState({ hasFilters, onClearFilters }) {
   );
 }
 
-export default function TaskList({ tasks, onDelete, onTaskUpdate, onEdit, onTagFilter, hasFilters = false, onClearFilters }) {
+export default function TaskList({ tasks, onDelete, onTaskUpdate, onEdit, onTagFilter, onTimeTrack, hasFilters = false, onClearFilters }) {
   if (!tasks || tasks.length === 0) {
     return <EmptyState hasFilters={hasFilters} onClearFilters={onClearFilters} />;
   }
@@ -62,6 +62,7 @@ export default function TaskList({ tasks, onDelete, onTaskUpdate, onEdit, onTagF
           onTaskUpdate={onTaskUpdate}
           onEdit={onEdit}
           onTagFilter={onTagFilter}
+          onTimeTrack={onTimeTrack}
         />
       ))}
     </div>
