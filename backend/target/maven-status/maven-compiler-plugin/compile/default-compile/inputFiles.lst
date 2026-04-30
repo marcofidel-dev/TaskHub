@@ -7,6 +7,7 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/config/RateLimitConfig.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/SubtaskController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/FeatureAccessRepository.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/dto/WompiWebhookPayload.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/AuthController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/AnalyticsService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TaskResponse.java
@@ -21,6 +22,8 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/CategoryRepository.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/CategoryController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/TagRepository.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/dto/WompiPaymentRequest.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/config/WompiConfig.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/SubtaskService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TaskUpdateRequest.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/Subtask.java
@@ -58,6 +61,7 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/ExportTasksRequest.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/security/SecurityConfig.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/UserLimitsController.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/controller/WompiWebhookController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/Category.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/security/JwtProvider.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TaskResponseWithDetails.java
@@ -70,6 +74,7 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/UserPlanRepository.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/ExportService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/config/LocalDateTimeDeserializer.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/service/WompiPaymentService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/AnalyticsController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/TaskService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/LoginRequest.java
@@ -80,6 +85,7 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/security/CurrentUser.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/User.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/CategoryProductivityResponse.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/dto/WompiPaymentResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/SubtaskResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/TimeTrackingService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/UserLimitsResponse.java
