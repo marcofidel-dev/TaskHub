@@ -9,6 +9,7 @@ import SettingsPage from './pages/SettingsPage';
 import PricingPage from './pages/PricingPage';
 import UpgradePage from './pages/UpgradePage';
 import SubscriptionPage from './pages/SubscriptionPage';
+import AnalyticsDashboard from './pages/AnalyticsDashboard';
 import LoginPage from './components/Auth/LoginPage';
 import RegisterPage from './components/Auth/RegisterPage';
 import './index.css';
@@ -66,6 +67,14 @@ function AppRoutes() {
           }
         />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading}>
+              <AnalyticsDashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/upgrade"
           element={
