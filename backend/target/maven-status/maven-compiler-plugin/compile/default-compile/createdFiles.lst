@@ -1,7 +1,9 @@
+com/taskhub/dto/ExportTasksRequest$ExportTasksRequestBuilder.class
 com/taskhub/dto/UserResponse.class
 com/taskhub/dto/ApiErrorResponse$ApiErrorResponseBuilder.class
 com/taskhub/controller/TagController.class
 com/taskhub/dto/TimeEntryResponse$TimeEntryResponseBuilder.class
+com/taskhub/controller/ExportController.class
 com/taskhub/dto/TimeTrackingAnalyticsResponse$TimeByCategory$TimeByCategoryBuilder.class
 com/taskhub/service/AnalyticsService.class
 com/taskhub/dto/TagCreateRequest.class
@@ -37,6 +39,7 @@ com/taskhub/service/TimeTrackingService.class
 com/taskhub/dto/DateRangeAnalyticsResponse$DateRangeAnalyticsResponseBuilder.class
 com/taskhub/controller/TimeTrackingController.class
 com/taskhub/config/LocalDateTimeDeserializer.class
+com/taskhub/dto/ImportTasksResponse$ImportTasksResponseBuilder.class
 com/taskhub/service/SubscriptionService.class
 com/taskhub/dto/TagResponse.class
 com/taskhub/service/TaskService.class
@@ -66,6 +69,7 @@ com/taskhub/entity/Subtask$SubtaskBuilder.class
 com/taskhub/dto/TimeTrackingAnalyticsResponse$TimeByDay.class
 com/taskhub/repository/CategoryRepository.class
 com/taskhub/entity/User.class
+com/taskhub/service/ExportService.class
 com/taskhub/entity/TaskTimeEntry$TaskTimeEntryBuilder.class
 com/taskhub/dto/TaskTimeTrackingResponse.class
 com/taskhub/entity/SubscriptionTransaction$SubscriptionTransactionBuilder.class
@@ -91,17 +95,20 @@ com/taskhub/dto/CompletionMetricsResponse$CompletionByPriority.class
 com/taskhub/entity/Task$TaskBuilder.class
 com/taskhub/dto/CategoryResponse.class
 com/taskhub/dto/TaskTimeTrackingResponse$TaskTimeTrackingResponseBuilder.class
+com/taskhub/dto/ExportTasksRequest.class
 com/taskhub/dto/TimeEntryResponse.class
 com/taskhub/dto/AuthResponse.class
 com/taskhub/service/UserService.class
 com/taskhub/dto/SubtaskListResponse.class
 com/taskhub/dto/TimeTrackingAnalyticsResponse$TimeTrackingAnalyticsResponseBuilder.class
 com/taskhub/entity/User$UserBuilder.class
+com/taskhub/service/ExportService$1.class
 com/taskhub/dto/TimeTrackingAnalyticsResponse.class
 com/taskhub/dto/CategoryResponse$CategoryResponseBuilder.class
 com/taskhub/dto/CategoryProductivityResponse$CategoryMetrics$CategoryMetricsBuilder.class
 com/taskhub/dto/CompletionMetricsResponse$CompletionByPriority$CompletionByPriorityBuilder.class
 com/taskhub/security/SecurityUtil.class
+com/taskhub/dto/ImportTasksResponse.class
 com/taskhub/dto/CategoryProductivityResponse.class
 com/taskhub/dto/PlanUpgradeResponse.class
 com/taskhub/dto/DateRangeAnalyticsResponse$DailyMetrics$DailyMetricsBuilder.class

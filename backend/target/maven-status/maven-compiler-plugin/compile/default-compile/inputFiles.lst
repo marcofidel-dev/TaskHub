@@ -27,6 +27,7 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/App.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/PlanService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/PlanUpgradeResponse.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/dto/ImportTasksResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/UserService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/SubscriptionService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/CurrentPlanResponse.java
@@ -51,6 +52,7 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/TaskRepository.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TaskCreateRequest.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/TimeTrackingAnalyticsResponse.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/dto/ExportTasksRequest.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/security/SecurityConfig.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/Category.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/security/JwtProvider.java
@@ -62,6 +64,7 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/SubtaskStats.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/UserRepository.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/repository/UserPlanRepository.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/service/ExportService.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/config/LocalDateTimeDeserializer.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/controller/AnalyticsController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/TaskService.java
@@ -75,6 +78,7 @@
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/CategoryProductivityResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/SubtaskResponse.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/service/TimeTrackingService.java
+/home/marco/taskhub/backend/src/main/java/com/taskhub/controller/ExportController.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/config/WebMvcConfig.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/entity/Task.java
 /home/marco/taskhub/backend/src/main/java/com/taskhub/dto/AnalyticsDashboardResponse.java
