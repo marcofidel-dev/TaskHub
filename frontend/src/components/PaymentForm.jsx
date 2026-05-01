@@ -17,16 +17,13 @@ export default function PaymentForm({ plan, amount }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     if (name === 'cardNumber') {
       const digits = value.replace(/\D/g, '').slice(0, 16);
       const formatted = digits.replace(/(\d{4})(?=\d)/g, '$1 ');
       setFormData(prev => ({ ...prev, [name]: formatted }));
     } else if (name === 'expiryDate') {
       let digits = value.replace(/\D/g, '').slice(0, 4);
-      if (digits.length >= 3) {
-        digits = digits.slice(0, 2) + '/' + digits.slice(2);
-      }
+      if (digits.length >= 3) digits = digits.slice(0, 2) + '/' + digits.slice(2);
       setFormData(prev => ({ ...prev, [name]: digits }));
     } else if (name === 'cvv') {
       setFormData(prev => ({ ...prev, [name]: value.replace(/\D/g, '').slice(0, 4) }));
@@ -64,7 +61,6 @@ export default function PaymentForm({ plan, amount }) {
 
     try {
       const mockWompiTransactionId = `wompi_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
       const response = await api.post('/v1/subscriptions/upgrade', {
         plan,
         wompiTransactionId: mockWompiTransactionId
@@ -84,51 +80,48 @@ export default function PaymentForm({ plan, amount }) {
     }
   };
 
+  const inputClass =
+    'w-full px-4 py-2.5 bg-gray-50 dark:bg-slate-700/60 border border-gray-200 dark:border-slate-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm';
+  const labelClass = 'block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5';
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl text-sm">
           {error}
         </div>
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Cardholder Name
-        </label>
+        <label className={labelClass}>Cardholder Name</label>
         <input
           type="text"
           name="cardholderName"
           value={formData.cardholderName}
           onChange={handleChange}
-          placeholder="John Doe"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Name as it appears on card"
+          className={inputClass}
           disabled={loading}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Card Number
-        </label>
+        <label className={labelClass}>Card Number</label>
         <input
           type="text"
           name="cardNumber"
           value={formData.cardNumber}
           onChange={handleChange}
-          placeholder="1234 5678 9012 3456"
+          placeholder="0000 0000 0000 0000"
           maxLength="19"
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className={inputClass}
           disabled={loading}
         />
-        <p className="text-xs text-gray-500 mt-1">Test: 4111111111111111</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Expiry Date
-          </label>
+          <label className={labelClass}>Expiry Date</label>
           <input
             type="text"
             name="expiryDate"
@@ -136,20 +129,20 @@ export default function PaymentForm({ plan, amount }) {
             onChange={handleChange}
             placeholder="MM/YY"
             maxLength="5"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={inputClass}
             disabled={loading}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">CVV</label>
+          <label className={labelClass}>CVV</label>
           <input
             type="text"
             name="cvv"
             value={formData.cvv}
             onChange={handleChange}
-            placeholder="123"
+            placeholder="•••"
             maxLength="4"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className={inputClass}
             disabled={loading}
           />
         </div>
@@ -158,12 +151,23 @@ export default function PaymentForm({ plan, amount }) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-3 px-4 rounded-xl font-bold text-white text-sm transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer mt-1"
+        style={{ background: 'linear-gradient(135deg, #4F46E5, #7C3AED)', boxShadow: '0 4px 20px rgba(99,102,241,0.35)' }}
       >
-        {loading ? 'Processing...' : `Pay $${amount}`}
+        {loading ? (
+          <span className="flex items-center justify-center gap-2">
+            <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            Processing...
+          </span>
+        ) : (
+          `Pay $${amount} / month`
+        )}
       </button>
 
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-gray-400 dark:text-gray-500 text-center leading-relaxed">
         By completing this purchase, you agree to our Terms of Service and Privacy Policy.
       </p>
     </form>

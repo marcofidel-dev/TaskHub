@@ -119,7 +119,7 @@ function PasswordStrength({ password, t }) {
 const PANEL_FEATURES = [
   { icon: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 11 12 14 22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>, title: 'Set up in 30 seconds', desc: 'No setup required. Just sign up and go.' },
   { icon: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /></svg>, title: 'Categories & tags', desc: 'Structure your work the way you think.' },
-  { icon: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>, title: 'Free forever', desc: 'No credit card. No hidden fees. Ever.' },
+  { icon: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>, title: 'Secure & reliable', desc: 'Your data protected. Payments via Wompi.' },
 ];
 
 function BrandPanel() {
@@ -153,7 +153,7 @@ function BrandPanel() {
         </ul>
       </div>
 
-      <p className="relative z-10 text-indigo-400 text-xs">&copy; {new Date().getFullYear()} TaskHub. Free to use.</p>
+      <p className="relative z-10 text-indigo-400 text-xs">&copy; {new Date().getFullYear()} TaskHub. All rights reserved.</p>
     </div>
   );
 }

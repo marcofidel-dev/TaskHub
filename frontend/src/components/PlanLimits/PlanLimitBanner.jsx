@@ -7,52 +7,54 @@ export default function PlanLimitBanner({ limits, loading }) {
   const { taskCount, taskLimit, categoryCount, categoryLimit } = limits;
   const taskPercent = Math.min((taskCount / taskLimit) * 100, 100);
   const categoryPercent = Math.min((categoryCount / categoryLimit) * 100, 100);
-  const isTaskAtLimit = taskCount >= taskLimit;
-  const isCategoryAtLimit = categoryCount >= categoryLimit;
+  const isAtLimit = taskCount >= taskLimit || categoryCount >= categoryLimit;
 
-  if (!isTaskAtLimit && taskPercent < 60 && !isCategoryAtLimit && categoryPercent < 60) return null;
+  if (!isAtLimit && taskPercent < 60 && categoryPercent < 60) return null;
 
   return (
-    <div className="mb-5 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 rounded-xl animate-fadeIn">
-      <div className="flex items-start justify-between gap-4">
+    <div
+      className="mb-5 rounded-xl overflow-hidden animate-fadeIn"
+      style={{ background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4c1d95 100%)' }}
+    >
+      <div className="px-4 py-3 flex items-center gap-3">
+        <div className="shrink-0 w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
+          <svg className="w-3.5 h-3.5 text-indigo-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-amber-800 dark:text-amber-300 mb-2.5">
-            Free plan limits
-          </p>
-          <div className="space-y-2">
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-amber-700 dark:text-amber-400">Tasks</span>
-                <span className={`text-xs font-bold ${isTaskAtLimit ? 'text-red-600 dark:text-red-400' : 'text-amber-700 dark:text-amber-400'}`}>
-                  {taskCount}/{taskLimit}
-                </span>
-              </div>
-              <div className="w-full h-1.5 bg-amber-200 dark:bg-amber-800/50 rounded-full overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-300 ${isTaskAtLimit ? 'bg-red-500' : 'bg-amber-500'}`}
-                  style={{ width: `${taskPercent}%` }}
-                />
-              </div>
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <span className="text-xs font-bold text-white">
+              {isAtLimit ? 'Starter plan limit reached' : 'Approaching plan limit'}
+            </span>
+            <span className="text-xs text-indigo-300">
+              Tasks {taskCount}/{taskLimit} · Categories {categoryCount}/{categoryLimit}
+            </span>
+          </div>
+          <div className="flex gap-2 mt-1.5">
+            <div className="flex-1 h-1 bg-white/15 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-300"
+                style={{
+                  width: `${taskPercent}%`,
+                  background: taskPercent >= 100 ? '#f87171' : 'rgba(165,180,252,0.9)'
+                }}
+              />
             </div>
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-xs text-amber-700 dark:text-amber-400">Categories</span>
-                <span className={`text-xs font-bold ${isCategoryAtLimit ? 'text-red-600 dark:text-red-400' : 'text-amber-700 dark:text-amber-400'}`}>
-                  {categoryCount}/{categoryLimit}
-                </span>
-              </div>
-              <div className="w-full h-1.5 bg-amber-200 dark:bg-amber-800/50 rounded-full overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-300 ${isCategoryAtLimit ? 'bg-red-500' : 'bg-amber-500'}`}
-                  style={{ width: `${categoryPercent}%` }}
-                />
-              </div>
+            <div className="flex-1 h-1 bg-white/15 rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all duration-300"
+                style={{
+                  width: `${categoryPercent}%`,
+                  background: categoryPercent >= 100 ? '#f87171' : 'rgba(165,180,252,0.9)'
+                }}
+              />
             </div>
           </div>
         </div>
         <Link
           to="/pricing"
-          className="shrink-0 px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold rounded-lg transition-colors"
+          className="shrink-0 px-3.5 py-1.5 bg-white text-indigo-700 text-xs font-bold rounded-lg hover:bg-indigo-50 transition-colors cursor-pointer"
         >
           Upgrade
         </Link>
