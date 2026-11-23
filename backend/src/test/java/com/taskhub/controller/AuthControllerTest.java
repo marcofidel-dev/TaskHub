@@ -167,14 +167,12 @@ class AuthControllerTest {
         return User.builder()
                 .id(id).email(email).username(username)
                 .password("$2a$10$hashed")
-                .subscriptionTier(User.SubscriptionTier.FREE)
                 .build();
     }
 
     private UserResponse buildUserResponse(Long id, String email, String username) {
         return UserResponse.builder()
                 .id(id).email(email).username(username)
-                .subscriptionTier(User.SubscriptionTier.FREE)
                 .build();
     }
 }

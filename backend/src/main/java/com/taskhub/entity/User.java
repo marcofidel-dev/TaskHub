@@ -27,16 +27,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private SubscriptionTier subscriptionTier;
-
-    @Column
-    private String stripeCustomerId;
-
-    @Column
-    private String stripeSubscriptionId;
-
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -52,9 +42,5 @@ public class User {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    public enum SubscriptionTier {
-        FREE, PRO, TEAM
     }
 }

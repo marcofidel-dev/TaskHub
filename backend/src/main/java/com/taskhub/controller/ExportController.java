@@ -3,7 +3,6 @@ package com.taskhub.controller;
 import com.taskhub.dto.ExportTasksRequest;
 import com.taskhub.security.CurrentUser;
 import com.taskhub.service.ExportService;
-import com.taskhub.service.FeatureAccessService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 public class ExportController {
 
     private final ExportService exportService;
-    private final FeatureAccessService featureAccessService;
 
     private static final DateTimeFormatter FILENAME_FMT = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 
@@ -28,10 +26,6 @@ public class ExportController {
     public ResponseEntity<?> exportTasksAsCSV(
             @CurrentUser Long userId,
             @RequestBody(required = false) ExportTasksRequest request) {
-
-        if (!featureAccessService.canUseFeature(userId, "csv_export")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
         try {
             if (request == null) request = ExportTasksRequest.builder().build();
@@ -53,10 +47,6 @@ public class ExportController {
             @CurrentUser Long userId,
             @RequestBody(required = false) ExportTasksRequest request) {
 
-        if (!featureAccessService.canUseFeature(userId, "csv_export")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         try {
             if (request == null) request = ExportTasksRequest.builder().build();
             byte[] data = exportService.exportTasksAsExcel(userId, request);
@@ -76,10 +66,6 @@ public class ExportController {
     public ResponseEntity<?> exportTasksAsCalendar(
             @CurrentUser Long userId,
             @RequestBody(required = false) ExportTasksRequest request) {
-
-        if (!featureAccessService.canUseFeature(userId, "csv_export")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
         try {
             if (request == null) request = ExportTasksRequest.builder().build();

@@ -62,7 +62,6 @@ class TaskControllerTest {
                 .email("test@taskhub.com")
                 .username("testuser")
                 .password("$2a$10$hashedpassword")
-                .subscriptionTier(User.SubscriptionTier.FREE)
                 .build());
 
         String token = jwtProvider.generateAccessToken(testUser);

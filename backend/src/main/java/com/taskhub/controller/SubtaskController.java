@@ -5,7 +5,6 @@ import com.taskhub.entity.Subtask;
 import com.taskhub.security.CurrentUser;
 import com.taskhub.service.SubtaskService;
 import com.taskhub.service.SubtaskStats;
-import com.taskhub.service.FeatureAccessService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +20,12 @@ import java.util.stream.Collectors;
 public class SubtaskController {
 
     private final SubtaskService subtaskService;
-    private final FeatureAccessService featureAccessService;
 
     @PostMapping
     public ResponseEntity<SubtaskResponse> createSubtask(
             @PathVariable Long taskId,
             @CurrentUser Long userId,
             @Valid @RequestBody SubtaskRequest request) {
-
-        if (!featureAccessService.canUseFeature(userId, "subtasks")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
         Subtask subtask = subtaskService.createSubtask(
             taskId, userId,
@@ -45,10 +39,6 @@ public class SubtaskController {
     public ResponseEntity<SubtaskListResponse> getSubtasks(
             @PathVariable Long taskId,
             @CurrentUser Long userId) {
-
-        if (!featureAccessService.canUseFeature(userId, "subtasks")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
         List<Subtask> subtasks = subtaskService.getSubtasksByTask(taskId);
         SubtaskStats stats = subtaskService.getSubtaskStats(taskId);
@@ -70,10 +60,6 @@ public class SubtaskController {
             @CurrentUser Long userId,
             @Valid @RequestBody SubtaskRequest request) {
 
-        if (!featureAccessService.canUseFeature(userId, "subtasks")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         Subtask subtask = subtaskService.updateSubtask(
             subtaskId, userId,
             request.getTitle(), request.getDescription(), null, request.getOrderIndex()
@@ -88,10 +74,6 @@ public class SubtaskController {
             @PathVariable Long subtaskId,
             @CurrentUser Long userId) {
 
-        if (!featureAccessService.canUseFeature(userId, "subtasks")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
         return ResponseEntity.ok(mapToResponse(subtaskService.toggleSubtask(subtaskId, userId)));
     }
 
@@ -100,10 +82,6 @@ public class SubtaskController {
             @PathVariable Long taskId,
             @PathVariable Long subtaskId,
             @CurrentUser Long userId) {
-
-        if (!featureAccessService.canUseFeature(userId, "subtasks")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
         subtaskService.deleteSubtask(subtaskId, userId);
         return ResponseEntity.noContent().build();
@@ -114,10 +92,6 @@ public class SubtaskController {
             @PathVariable Long taskId,
             @CurrentUser Long userId,
             @Valid @RequestBody ReorderSubtasksRequest request) {
-
-        if (!featureAccessService.canUseFeature(userId, "subtasks")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
         subtaskService.reorderSubtasks(taskId, request.getSubtaskIds(), userId);
 

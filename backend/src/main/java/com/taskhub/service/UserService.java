@@ -3,7 +3,6 @@ package com.taskhub.service;
 import com.taskhub.dto.RegisterRequest;
 import com.taskhub.dto.UserResponse;
 import com.taskhub.entity.User;
-import com.taskhub.entity.User.SubscriptionTier;
 import com.taskhub.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,6 @@ public class UserService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .username(request.getUsername())
-                .subscriptionTier(SubscriptionTier.FREE)
                 .build();
 
         User saved = userRepository.save(user);
@@ -49,7 +47,6 @@ public class UserService {
                 .id(user.getId())
                 .email(user.getEmail())
                 .username(user.getUsername())
-                .subscriptionTier(user.getSubscriptionTier())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();

@@ -39,7 +39,7 @@ class AuthControllerRefreshTest {
     void refresh_validToken_shouldRotateAndReturnBothTokens() {
         Claims claims = mock(Claims.class);
         User user = User.builder().id(1L).email("user@example.com")
-                .subscriptionTier(User.SubscriptionTier.FREE).build();
+                .build();
 
         when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(true);
         when(jwtProvider.extractClaims(OLD_REFRESH)).thenReturn(claims);
@@ -64,7 +64,7 @@ class AuthControllerRefreshTest {
     void refresh_validToken_shouldBlacklistOldRefreshToken() {
         Claims claims = mock(Claims.class);
         User user = User.builder().id(1L).email("user@example.com")
-                .subscriptionTier(User.SubscriptionTier.FREE).build();
+                .build();
 
         when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(true);
         when(jwtProvider.extractClaims(OLD_REFRESH)).thenReturn(claims);
@@ -84,7 +84,7 @@ class AuthControllerRefreshTest {
     void refresh_validToken_shouldIssueNewRefreshToken() {
         Claims claims = mock(Claims.class);
         User user = User.builder().id(1L).email("user@example.com")
-                .subscriptionTier(User.SubscriptionTier.FREE).build();
+                .build();
 
         when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(true);
         when(jwtProvider.extractClaims(OLD_REFRESH)).thenReturn(claims);
