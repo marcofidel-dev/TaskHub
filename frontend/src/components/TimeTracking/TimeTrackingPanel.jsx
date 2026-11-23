@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../../services/api';
-import { usePlanFeatures } from '../../hooks/usePlanFeatures';
 import TimeEntryForm from './TimeEntryForm';
 import TimeEntryList from './TimeEntryList';
 
 export default function TimeTrackingPanel({ taskId }) {
-  const { canUseFeature, loading: featuresLoading } = usePlanFeatures();
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showForm, setShowForm] = useState(false);
 
-  const hasAccess = canUseFeature('time_tracking');
-
   useEffect(() => {
-    if (!featuresLoading && hasAccess && taskId) {
+    if (taskId) {
       fetchTimeEntries();
-    } else if (!featuresLoading) {
+    } else {
       setLoading(false);
     }
-  }, [taskId, hasAccess, featuresLoading]);
+  }, [taskId]);
 
   const fetchTimeEntries = async () => {
     try {
@@ -50,31 +45,6 @@ export default function TimeTrackingPanel({ taskId }) {
       setError('Failed to delete time entry');
     }
   };
-
-  if (featuresLoading) {
-    return (
-      <div className="flex justify-center py-4">
-        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600" />
-      </div>
-    );
-  }
-
-  if (!hasAccess) {
-    return (
-      <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-        <h3 className="font-semibold text-blue-900 dark:text-blue-300 mb-1.5">Time Tracking</h3>
-        <p className="text-sm text-blue-800 dark:text-blue-400 mb-3">
-          Track the time you spend on this task. Available on Pro and Team plans.
-        </p>
-        <Link
-          to="/pricing"
-          className="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition"
-        >
-          Upgrade to Pro
-        </Link>
-      </div>
-    );
-  }
 
   return (
     <div>

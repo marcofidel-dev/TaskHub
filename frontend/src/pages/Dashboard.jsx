@@ -7,11 +7,9 @@ import TaskFilter from '../components/Tasks/TaskFilter';
 import ConfirmModal from '../components/ConfirmModal';
 import TimeTrackingPanel from '../components/TimeTracking/TimeTrackingPanel';
 import SubtasksPanel from '../components/Subtasks/SubtasksPanel';
-import ExportButtonProtected from '../components/Export/ExportButtonProtected';
-import PlanLimitBanner from '../components/PlanLimits/PlanLimitBanner';
+import ExportButton from '../components/Export/ExportButton';
 import { tasks as tasksApi, categories as categoriesApi, tags as tagsApi } from '../services/api';
 import { useToast } from '../context/ToastContext';
-import { useUserLimits } from '../hooks/useUserLimits';
 
 function Modal({ title, children, onClose }) {
   return (
@@ -57,7 +55,6 @@ function SkeletonCard() {
 export default function Dashboard({ user, onLogout }) {
   const { t } = useTranslation(['tasks', 'auth', 'common']);
   const { showToast } = useToast();
-  const { limits, loading: limitsLoading, refetch: refetchLimits } = useUserLimits();
 
   const [taskList, setTaskList]         = useState([]);
   const [categories, setCategories]     = useState([]);
@@ -133,7 +130,6 @@ export default function Dashboard({ user, onLogout }) {
       await tasksApi.create(data);
       setShowForm(false);
       await fetchTasks(activeFilters);
-      refetchLimits();
       showToast('success', t('tasks:task_created'));
     } catch (err) {
       showToast('error', err.response?.data?.message || t('tasks:failed_to_create'));
@@ -168,7 +164,6 @@ export default function Dashboard({ user, onLogout }) {
     try {
       await tasksApi.delete(taskId);
       setTaskList((prev) => prev.filter((task) => task.id !== taskId));
-      refetchLimits();
       showToast('success', t('tasks:task_deleted'));
     } catch (err) {
       showToast('error', err.response?.data?.message || t('tasks:failed_to_delete'));
@@ -241,7 +236,7 @@ export default function Dashboard({ user, onLogout }) {
           <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">{subtitle}</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <ExportButtonProtected />
+          <ExportButton />
           <button
             onClick={() => { setShowForm(true); setEditingTask(null); }}
             className="flex items-center gap-2 px-4 py-2.5 text-white rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90 hover:shadow-md shadow-sm min-h-[44px]"
@@ -273,8 +268,6 @@ export default function Dashboard({ user, onLogout }) {
         ))}
       </div>
 
-      {/* Plan limit banner */}
-      <PlanLimitBanner limits={limits} loading={limitsLoading} />
 
       {/* Progress bar */}
       {taskList.length > 0 && (
