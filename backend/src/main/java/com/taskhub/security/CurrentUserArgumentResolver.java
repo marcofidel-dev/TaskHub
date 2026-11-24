@@ -41,7 +41,6 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
         }
 
         String authHeader = request.getHeader("Authorization");
-        log.info("[CurrentUser] Authorization header: {}", authHeader);
 
         if (authHeader == null || authHeader.isEmpty()) {
             log.warn("[CurrentUser] Missing Authorization header");
@@ -50,16 +49,14 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
         }
 
         if (!authHeader.startsWith("Bearer ")) {
-            log.warn("[CurrentUser] Invalid Authorization header format: {}", authHeader);
+            log.warn("[CurrentUser] Invalid Authorization header format");
             if (required) throw new IllegalArgumentException("Authorization header must start with 'Bearer '");
             return null;
         }
 
         String token = authHeader.substring(7);
-        log.info("[CurrentUser] Token extracted (first 20 chars): {}...", token.length() > 20 ? token.substring(0, 20) : token);
 
-        boolean valid = jwtProvider.validateToken(token);
-        log.info("[CurrentUser] Token valid: {}", valid);
+        boolean valid = jwtProvider.validateAccessToken(token);
 
         if (!valid) {
             log.warn("[CurrentUser] Invalid or expired token");
@@ -68,7 +65,6 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
         }
 
         Long userId = jwtProvider.getUserIdFromToken(token);
-        log.info("[CurrentUser] UserId from token: {}", userId);
 
         return userId;
     }

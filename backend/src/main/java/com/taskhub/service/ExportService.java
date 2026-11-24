@@ -6,6 +6,7 @@ import com.taskhub.entity.Task;
 import com.taskhub.repository.SubtaskRepository;
 import com.taskhub.repository.TaskRepository;
 import com.taskhub.repository.TaskTimeEntryRepository;
+import com.taskhub.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -59,8 +60,8 @@ public class ExportService {
 
                 printer.printRecord(
                     task.getId(),
-                    task.getTitle(),
-                    task.getDescription() != null ? task.getDescription() : "",
+                    SecurityUtil.neutralizeFormula(task.getTitle()),
+                    task.getDescription() != null ? SecurityUtil.neutralizeFormula(task.getDescription()) : "",
                     task.getCategoryId() != null ? task.getCategoryId() : "",
                     task.getPriority() != null ? task.getPriority().name() : "",
                     Boolean.TRUE.equals(task.getIsCompleted()) ? "Yes" : "No",
@@ -75,7 +76,7 @@ public class ExportService {
                         printer.printRecord(
                             "  └─ " + subtask.getId(),
                             "   " + subtask.getTitle(),
-                            subtask.getDescription() != null ? subtask.getDescription() : "",
+                            subtask.getDescription() != null ? SecurityUtil.neutralizeFormula(subtask.getDescription()) : "",
                             "", "", Boolean.TRUE.equals(subtask.getCompleted()) ? "Yes" : "No",
                             subtask.getCreatedAt().format(DATETIME_FMT),
                             "", "", ""
@@ -123,8 +124,8 @@ public class ExportService {
 
                 Row row = sheet.createRow(rowNum++);
                 row.createCell(0).setCellValue(task.getId());
-                row.createCell(1).setCellValue(task.getTitle());
-                row.createCell(2).setCellValue(task.getDescription() != null ? task.getDescription() : "");
+                row.createCell(1).setCellValue(SecurityUtil.neutralizeFormula(task.getTitle()));
+                row.createCell(2).setCellValue(task.getDescription() != null ? SecurityUtil.neutralizeFormula(task.getDescription()) : "");
                 row.createCell(3).setCellValue(task.getCategoryId() != null ? task.getCategoryId() : 0L);
                 row.createCell(4).setCellValue(task.getPriority() != null ? task.getPriority().name() : "");
                 row.createCell(5).setCellValue(Boolean.TRUE.equals(task.getIsCompleted()) ? "Yes" : "No");

@@ -42,7 +42,7 @@ public class TaskController {
             if (userId == null && authHeader != null && authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
                 log.warn("[createTask] @CurrentUser returned null — falling back to manual token extraction");
-                if (jwtProvider.validateToken(token)) {
+                if (jwtProvider.validateAccessToken(token)) {
                     userId = jwtProvider.getUserIdFromToken(token);
                     log.info("[createTask] Fallback userId: {}", userId);
                 }

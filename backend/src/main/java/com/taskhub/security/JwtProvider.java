@@ -14,6 +14,7 @@ import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -34,12 +35,16 @@ public class JwtProvider {
         this.tokenBlacklistRepository = tokenBlacklistRepository;
     }
 
+    public static final String TYPE_CLAIM = "type";
+    public static final String TYPE_ACCESS = "access";
+    public static final String TYPE_REFRESH = "refresh";
+
     public String generateAccessToken(Long userId, String email) {
-        return createToken(userId, email, accessTokenExpiration);
+        return createToken(userId, email, accessTokenExpiration, TYPE_ACCESS);
     }
 
     public String generateRefreshToken(Long userId, String email) {
-        return createToken(userId, email, refreshTokenExpiration);
+        return createToken(userId, email, refreshTokenExpiration, TYPE_REFRESH);
     }
 
     public String generateAccessToken(User user) {
@@ -50,12 +55,33 @@ public class JwtProvider {
         return generateRefreshToken(user.getId(), user.getEmail());
     }
 
+    /** Valid signature, not expired, not blacklisted — of ANY type. Prefer the typed variants. */
     public boolean validateToken(String token) {
+        return validateToken(token, null);
+    }
+
+    /** Only accepts tokens issued as access tokens (used to authenticate API calls). */
+    public boolean validateAccessToken(String token) {
+        return validateToken(token, TYPE_ACCESS);
+    }
+
+    /** Only accepts tokens issued as refresh tokens (used only on /auth/refresh). */
+    public boolean validateRefreshToken(String token) {
+        return validateToken(token, TYPE_REFRESH);
+    }
+
+    private boolean validateToken(String token, String expectedType) {
         try {
-            Jwts.parser()
+            Claims claims = Jwts.parser()
                     .verifyWith(getSigningKey())
                     .build()
-                    .parseSignedClaims(token);
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+            if (expectedType != null && !expectedType.equals(claims.get(TYPE_CLAIM, String.class))) {
+                log.warn("JWT token has wrong type, expected {}", expectedType);
+                return false;
+            }
 
             if (isTokenBlacklisted(token)) {
                 log.warn("JWT token is blacklisted");
@@ -115,13 +141,15 @@ public class JwtProvider {
         return claims.get("email", String.class);
     }
 
-    private String createToken(Long userId, String email, long expiration) {
+    private String createToken(Long userId, String email, long expiration, String type) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 
         return Jwts.builder()
                 .subject(String.valueOf(userId))
                 .claim("email", email)
+                .claim(TYPE_CLAIM, type)
+                .id(UUID.randomUUID().toString())
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(getSigningKey())

@@ -120,7 +120,7 @@ public class AuthController {
                                 .build()
                 );
             }
-            if (!jwtProvider.validateToken(refreshToken)) {
+            if (!jwtProvider.validateRefreshToken(refreshToken)) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
                         ErrorResponse.builder()
                                 .error("UNAUTHORIZED")

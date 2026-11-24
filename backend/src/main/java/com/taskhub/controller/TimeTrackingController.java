@@ -43,8 +43,8 @@ public class TimeTrackingController {
             @PathVariable Long taskId,
             @CurrentUser Long userId) {
 
-        List<TaskTimeEntry> entries = timeTrackingService.getTimeEntriesByTask(taskId);
-        BigDecimal totalHours = timeTrackingService.getTotalHoursByTask(taskId);
+        List<TaskTimeEntry> entries = timeTrackingService.getTimeEntriesByTask(taskId, userId);
+        BigDecimal totalHours = timeTrackingService.getTotalHoursByTask(taskId, userId);
 
         TaskTimeTrackingResponse response = TaskTimeTrackingResponse.builder()
             .taskId(taskId)

@@ -1,8 +1,10 @@
 package com.taskhub.service;
 
 import com.taskhub.entity.TaskTimeEntry;
+import com.taskhub.repository.TaskRepository;
 import com.taskhub.repository.TaskTimeEntryRepository;
 import com.taskhub.security.SecurityUtil;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +19,18 @@ import java.util.List;
 public class TimeTrackingService {
 
     private final TaskTimeEntryRepository timeEntryRepository;
+    private final TaskRepository taskRepository;
+
+    /** Fails with EntityNotFoundException (404) unless the task exists AND belongs to userId. */
+    private void requireOwnedTask(Long taskId, Long userId) {
+        if (taskRepository.findByIdAndUserId(taskId, userId).isEmpty()) {
+            throw new EntityNotFoundException("Task not found with id: " + taskId);
+        }
+    }
 
     public TaskTimeEntry createTimeEntry(Long taskId, Long userId, BigDecimal hours,
                                          Integer minutes, String description, LocalDate entryDate) {
+        requireOwnedTask(taskId, userId);
         TaskTimeEntry entry = TaskTimeEntry.builder()
             .taskId(taskId)
             .userId(userId)
@@ -60,7 +71,8 @@ public class TimeTrackingService {
     }
 
     @Transactional(readOnly = true)
-    public List<TaskTimeEntry> getTimeEntriesByTask(Long taskId) {
+    public List<TaskTimeEntry> getTimeEntriesByTask(Long taskId, Long userId) {
+        requireOwnedTask(taskId, userId);
         return timeEntryRepository.findByTaskId(taskId);
     }
 
@@ -70,7 +82,8 @@ public class TimeTrackingService {
     }
 
     @Transactional(readOnly = true)
-    public BigDecimal getTotalHoursByTask(Long taskId) {
+    public BigDecimal getTotalHoursByTask(Long taskId, Long userId) {
+        requireOwnedTask(taskId, userId);
         return timeEntryRepository.getTotalHoursByTask(taskId);
     }
 
@@ -80,7 +93,8 @@ public class TimeTrackingService {
     }
 
     @Transactional(readOnly = true)
-    public List<TaskTimeEntry> getTimeEntriesInRange(Long taskId, LocalDate startDate, LocalDate endDate) {
+    public List<TaskTimeEntry> getTimeEntriesInRange(Long taskId, Long userId, LocalDate startDate, LocalDate endDate) {
+        requireOwnedTask(taskId, userId);
         return timeEntryRepository.findByTaskIdAndDateRange(taskId, startDate, endDate);
     }
 }

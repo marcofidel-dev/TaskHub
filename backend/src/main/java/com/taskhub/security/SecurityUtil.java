@@ -46,6 +46,23 @@ public final class SecurityUtil {
         return stripped;
     }
 
+    // ── Spreadsheet formula injection ─────────────────────────────────────────
+
+    /**
+     * Neutralizes CSV/Excel formula injection (OWASP "CSV Injection"): a cell that
+     * starts with = + - @ TAB or CR is executed as a formula by Excel/Sheets/LibreOffice.
+     * Prefixing a single quote makes the spreadsheet treat it as plain text.
+     * Use ONLY when writing to CSV/XLSX, never for storage.
+     */
+    public static String neutralizeFormula(String value) {
+        if (value == null || value.isEmpty()) return value;
+        char c = value.charAt(0);
+        if (c == '=' || c == '+' || c == '-' || c == '@' || c == '\t' || c == '\r') {
+            return "'" + value;
+        }
+        return value;
+    }
+
     // ── SQL Injection Detection ───────────────────────────────────────────────
 
     /**

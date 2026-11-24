@@ -40,8 +40,8 @@ public class SubtaskController {
             @PathVariable Long taskId,
             @CurrentUser Long userId) {
 
-        List<Subtask> subtasks = subtaskService.getSubtasksByTask(taskId);
-        SubtaskStats stats = subtaskService.getSubtaskStats(taskId);
+        List<Subtask> subtasks = subtaskService.getSubtasksByTask(taskId, userId);
+        SubtaskStats stats = subtaskService.getSubtaskStats(taskId, userId);
 
         return ResponseEntity.ok(SubtaskListResponse.builder()
             .taskId(taskId)
@@ -95,8 +95,8 @@ public class SubtaskController {
 
         subtaskService.reorderSubtasks(taskId, request.getSubtaskIds(), userId);
 
-        List<Subtask> subtasks = subtaskService.getSubtasksByTask(taskId);
-        SubtaskStats stats = subtaskService.getSubtaskStats(taskId);
+        List<Subtask> subtasks = subtaskService.getSubtasksByTask(taskId, userId);
+        SubtaskStats stats = subtaskService.getSubtaskStats(taskId, userId);
 
         return ResponseEntity.ok(SubtaskListResponse.builder()
             .taskId(taskId)

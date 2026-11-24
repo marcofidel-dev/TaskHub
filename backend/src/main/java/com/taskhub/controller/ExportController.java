@@ -4,6 +4,7 @@ import com.taskhub.dto.ExportTasksRequest;
 import com.taskhub.security.CurrentUser;
 import com.taskhub.service.ExportService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 @RestController
 @RequestMapping("/api/v1/export")
 @RequiredArgsConstructor
+@Slf4j
 public class ExportController {
 
     private final ExportService exportService;
@@ -37,8 +39,9 @@ public class ExportController {
                 .contentType(MediaType.valueOf("text/csv"))
                 .body(data);
         } catch (Exception e) {
+            log.error("Export failed for userId={}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error exporting tasks: " + e.getMessage());
+                .body("Error exporting tasks");
         }
     }
 
@@ -57,8 +60,9 @@ public class ExportController {
                 .contentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                 .body(data);
         } catch (Exception e) {
+            log.error("Export failed for userId={}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error exporting tasks: " + e.getMessage());
+                .body("Error exporting tasks");
         }
     }
 
@@ -77,8 +81,9 @@ public class ExportController {
                 .contentType(MediaType.valueOf("text/calendar"))
                 .body(data);
         } catch (Exception e) {
+            log.error("Export failed for userId={}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error exporting calendar: " + e.getMessage());
+                .body("Error exporting calendar");
         }
     }
 }

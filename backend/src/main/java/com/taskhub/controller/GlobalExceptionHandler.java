@@ -1,6 +1,7 @@
 package com.taskhub.controller;
 
 import com.taskhub.dto.ApiErrorResponse;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -70,6 +71,27 @@ public class GlobalExceptionHandler {
                         .status(400)
                         .error("MALFORMED_REQUEST")
                         .message("Request body is missing or cannot be parsed")
+                        .timestamp(LocalDateTime.now())
+                        .path(request.getRequestURI())
+                        .build()
+        );
+    }
+
+    /**
+     * Resource missing or not owned by the caller. Same response for both
+     * cases so ids of other users' resources cannot be probed.
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleNotFound(
+            EntityNotFoundException e,
+            HttpServletRequest request) {
+
+        log.warn("Not found [{}]: {}", request.getRequestURI(), e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                ApiErrorResponse.builder()
+                        .status(404)
+                        .error("NOT_FOUND")
+                        .message("Resource not found")
                         .timestamp(LocalDateTime.now())
                         .path(request.getRequestURI())
                         .build()

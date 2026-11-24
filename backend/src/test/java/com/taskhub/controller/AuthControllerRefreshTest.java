@@ -41,7 +41,7 @@ class AuthControllerRefreshTest {
         User user = User.builder().id(1L).email("user@example.com")
                 .build();
 
-        when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(true);
+        when(jwtProvider.validateRefreshToken(OLD_REFRESH)).thenReturn(true);
         when(jwtProvider.extractClaims(OLD_REFRESH)).thenReturn(claims);
         when(claims.getSubject()).thenReturn("1");
         when(claims.get("email", String.class)).thenReturn("user@example.com");
@@ -66,7 +66,7 @@ class AuthControllerRefreshTest {
         User user = User.builder().id(1L).email("user@example.com")
                 .build();
 
-        when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(true);
+        when(jwtProvider.validateRefreshToken(OLD_REFRESH)).thenReturn(true);
         when(jwtProvider.extractClaims(OLD_REFRESH)).thenReturn(claims);
         when(claims.getSubject()).thenReturn("1");
         when(claims.get("email", String.class)).thenReturn("user@example.com");
@@ -86,7 +86,7 @@ class AuthControllerRefreshTest {
         User user = User.builder().id(1L).email("user@example.com")
                 .build();
 
-        when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(true);
+        when(jwtProvider.validateRefreshToken(OLD_REFRESH)).thenReturn(true);
         when(jwtProvider.extractClaims(OLD_REFRESH)).thenReturn(claims);
         when(claims.getSubject()).thenReturn("1");
         when(claims.get("email", String.class)).thenReturn("user@example.com");
@@ -112,7 +112,7 @@ class AuthControllerRefreshTest {
 
     @Test
     void refresh_invalidToken_shouldReturn401WithoutBlacklisting() {
-        when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(false);
+        when(jwtProvider.validateRefreshToken(OLD_REFRESH)).thenReturn(false);
 
         ResponseEntity<?> response = authController.refresh(Map.of("refreshToken", OLD_REFRESH));
 
@@ -124,7 +124,7 @@ class AuthControllerRefreshTest {
     void refresh_userNoLongerExists_shouldReturn401WithoutBlacklisting() {
         Claims claims = mock(Claims.class);
 
-        when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(true);
+        when(jwtProvider.validateRefreshToken(OLD_REFRESH)).thenReturn(true);
         when(jwtProvider.extractClaims(OLD_REFRESH)).thenReturn(claims);
         when(claims.getSubject()).thenReturn("1");
         when(claims.get("email", String.class)).thenReturn("deleted@example.com");
@@ -141,7 +141,7 @@ class AuthControllerRefreshTest {
     void refresh_tokenWithNullEmail_shouldReturn401() {
         Claims claims = mock(Claims.class);
 
-        when(jwtProvider.validateToken(OLD_REFRESH)).thenReturn(true);
+        when(jwtProvider.validateRefreshToken(OLD_REFRESH)).thenReturn(true);
         when(jwtProvider.extractClaims(OLD_REFRESH)).thenReturn(claims);
         when(claims.getSubject()).thenReturn("1");
         when(claims.get("email", String.class)).thenReturn(null);

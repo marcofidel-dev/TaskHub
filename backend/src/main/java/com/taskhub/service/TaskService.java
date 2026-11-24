@@ -82,10 +82,10 @@ public class TaskService {
                 .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + taskId));
 
         if (req.getTitle() != null) {
-            task.setTitle(req.getTitle());
+            task.setTitle(SecurityUtil.sanitizeHtml(req.getTitle()));
         }
         if (req.getDescription() != null) {
-            task.setDescription(req.getDescription());
+            task.setDescription(SecurityUtil.sanitizeHtml(req.getDescription()));
         }
         // categoryId: null value means "clear category"; omit field to keep current value
         // We treat 0 or negative as "clear" (from frontend "no category" selection)

@@ -129,7 +129,7 @@ class AuthControllerTest {
         Claims claims = mock(Claims.class);
         User mockUser = buildUser(1L, "user@example.com", "testuser");
 
-        when(jwtProvider.validateToken(oldRefresh)).thenReturn(true);
+        when(jwtProvider.validateRefreshToken(oldRefresh)).thenReturn(true);
         when(jwtProvider.extractClaims(oldRefresh)).thenReturn(claims);
         when(claims.getSubject()).thenReturn("1");
         when(claims.get("email", String.class)).thenReturn("user@example.com");
@@ -153,7 +153,7 @@ class AuthControllerTest {
 
     @Test
     void testRefreshTokenFail_invalidToken() {
-        when(jwtProvider.validateToken("bad.token")).thenReturn(false);
+        when(jwtProvider.validateRefreshToken("bad.token")).thenReturn(false);
 
         ResponseEntity<?> response = authController.refresh(Map.of("refreshToken", "bad.token"));
 
