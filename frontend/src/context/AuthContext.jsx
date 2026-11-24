@@ -87,9 +87,12 @@ export function AuthProvider({ children }) {
     if (!rt) return false;
     try {
       const res = await auth.refresh(rt);
-      const { accessToken: at } = res.data;
+      // Backend rotates refresh tokens: persist the new pair or the next refresh fails.
+      const { accessToken: at, refreshToken: newRt } = res.data;
       localStorage.setItem('accessToken', at);
+      localStorage.setItem('refreshToken', newRt);
       setAccessToken(at);
+      setRefreshToken(newRt);
       return true;
     } catch {
       logout();

@@ -18,15 +18,53 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Response interceptor: handle errors
+function clearSession() {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('user');
+}
+
+// Single-flight refresh: concurrent 401s share one /auth/refresh call.
+// The backend rotates refresh tokens (the old one is blacklisted), so BOTH
+// tokens must be stored from the response. Uses bare axios to bypass the
+// interceptors below and avoid refresh loops.
+let refreshPromise = null;
+function refreshTokens() {
+  if (!refreshPromise) {
+    const rt = localStorage.getItem('refreshToken');
+    if (!rt) return Promise.reject(new Error('No refresh token'));
+    refreshPromise = axios
+      .post(`${API_BASE}/v1/auth/refresh`, { refreshToken: rt })
+      .then((res) => {
+        const { accessToken, refreshToken } = res.data;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+        return accessToken;
+      })
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+  return refreshPromise;
+}
+
+// Response interceptor: on 401 try one silent refresh, then retry the request.
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+  async (error) => {
+    const original = error.config;
+    const isAuthCall = original?.url?.includes('/v1/auth/');
+
+    if (error.response?.status === 401 && original && !original._retried && !isAuthCall) {
+      original._retried = true;
+      try {
+        const accessToken = await refreshTokens();
+        original.headers.Authorization = `Bearer ${accessToken}`;
+        return api(original);
+      } catch {
+        clearSession();
+        if (window.location.pathname !== '/login') window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
